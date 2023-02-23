@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/BACEM/Documents/NetBeansProjects/Projettest/src/dechets/Update_EvenementsController.java</file>
+            <file>file:/C:/Users/BACEM/Documents/NetBeansProjects/Projettest/src/gui/ListeEvenementsController.java</file>
+            <file>file:/C:/Users/BACEM/Documents/NetBeansProjects/Projettest/src/dechets/AnnulerParticipationController.java</file>
+            <file>file:/C:/Users/BACEM/Documents/NetBeansProjects/Projettest/src/interfaces/CRUDP.java</file>
+            <file>file:/C:/Users/BACEM/Documents/NetBeansProjects/Projettest/src/gui/HomePage.java</file>
+            <file>file:/C:/Users/BACEM/Documents/NetBeansProjects/Projettest/src/gui/Update_EvenementsController.java</file>
+            <file>file:/C:/Users/BACEM/Documents/NetBeansProjects/Projettest/src/services/ParticipantsCRUD.java</file>
+            <file>file:/C:/Users/BACEM/Documents/NetBeansProjects/Projettest/src/gui/ParticiperEController.java</file>
+            <file>file:/C:/Users/BACEM/Documents/NetBeansProjects/Projettest/src/dechets/EvenementsController.java</file>
+            <file>file:/C:/Users/BACEM/Documents/NetBeansProjects/Projettest/src/entities/Participants.java</file>
+            <file>file:/C:/Users/BACEM/Documents/NetBeansProjects/Projettest/src/services/EvenementsCRUD.java</file>
+            <file>file:/C:/Users/BACEM/Documents/NetBeansProjects/Projettest/src/interfaces/EntityCRUD.java</file>
+            <file>file:/C:/Users/BACEM/Documents/NetBeansProjects/Projettest/src/gui/ListeParticipantsController.java</file>
+            <file>file:/C:/Users/BACEM/Documents/NetBeansProjects/Projettest/src/tests/MainClass.java</file>
+        </group>
+    </open-files>
+</project-private>
