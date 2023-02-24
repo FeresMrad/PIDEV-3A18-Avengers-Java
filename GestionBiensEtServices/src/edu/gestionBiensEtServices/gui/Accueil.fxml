@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" focusTraversable="true" prefHeight="400.0" prefWidth="729.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.gestionBiensEtServices.gui.AccueilController">
+   <children>
+      <Label layoutX="125.0" layoutY="86.0" text="Êtes vous intéressé par un échange">
+         <font>
+            <Font size="31.0" />
+         </font></Label>
+      <Button fx:id="idbien" layoutX="168.0" layoutY="223.0" mnemonicParsing="false" onMouseClicked="#redirectionbien" prefHeight="90.0" prefWidth="187.0" text="Bien">
+         <font>
+            <Font size="42.0" />
+         </font></Button>
+      <Button fx:id="idservice" layoutX="355.0" layoutY="223.0" mnemonicParsing="false" onMouseClicked="#redirectionservice" text="Service">
+         <font>
+            <Font size="42.0" />
+         </font></Button>
+      <Label layoutX="330.0" layoutY="154.0" text="de">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="97.0" fitWidth="174.0" layoutY="-4.0">
+         <image>
+            <Image url="@../../../images/tbadellogo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

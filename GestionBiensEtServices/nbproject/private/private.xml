@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Nouhe/Documents/NetBeansProjects/GestionBiensEtServices/src/edu/gestionBiensEtServices/gui/TestBienController.java</file>
+            <file>file:/C:/Users/Nouhe/Documents/NetBeansProjects/GestionBiensEtServices/src/edu/gestionBiensEtServices/interfaces/ServiceInterface.java</file>
+            <file>file:/C:/Users/Nouhe/Documents/NetBeansProjects/GestionBiensEtServices/src/edu/gestionBiensEtServices/services/ServiceService.java</file>
+            <file>file:/C:/Users/Nouhe/Documents/NetBeansProjects/GestionBiensEtServices/src/edu/gestionBiensEtServices/gui/HomePage.java</file>
+            <file>file:/C:/Users/Nouhe/Documents/NetBeansProjects/GestionBiensEtServices/src/edu/gestionBiensEtServices/entites/Bien.java</file>
+            <file>file:/C:/Users/Nouhe/Documents/NetBeansProjects/GestionBiensEtServices/src/edu/gestionBiensEtServices/tests/MainClass.java</file>
+            <file>file:/C:/Users/Nouhe/Documents/NetBeansProjects/GestionBiensEtServices/src/edu/gestionBiensEtServices/interfaces/BienInterface.java</file>
+            <file>file:/C:/Users/Nouhe/Documents/NetBeansProjects/GestionBiensEtServices/src/edu/gestionBiensEtServices/gui/AffichageService.fxml</file>
+            <file>file:/C:/Users/Nouhe/Documents/NetBeansProjects/GestionBiensEtServices/src/edu/gestionBiensEtServices/entites/Service.java</file>
+            <file>file:/C:/Users/Nouhe/Documents/NetBeansProjects/GestionBiensEtServices/src/edu/gestionBiensEtServices/upload/Upload.java</file>
+            <file>file:/C:/Users/Nouhe/Documents/NetBeansProjects/GestionBiensEtServices/src/edu/gestionBiensEtServices/gui/AffichageServiceController.java</file>
+            <file>file:/C:/Users/Nouhe/Documents/NetBeansProjects/GestionBiensEtServices/src/edu/gestionBiensEtServices/gui/AccueilController.java</file>
+            <file>file:/C:/Users/Nouhe/Documents/NetBeansProjects/GestionBiensEtServices/src/edu/gestionBiensEtServices/services/BienServices.java</file>
+            <file>file:/C:/Users/Nouhe/Documents/NetBeansProjects/GestionBiensEtServices/src/edu/gestionBiensEtServices/utils/MyConnection.java</file>
+        </group>
+    </open-files>
+</project-private>

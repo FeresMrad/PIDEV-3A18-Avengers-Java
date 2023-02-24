@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" focusTraversable="true" prefHeight="557.0" prefWidth="733.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.gestionBiensEtServices.gui.AffichageServiceController">
+   <children>
+      <Label layoutX="34.0" layoutY="44.0" text="Service">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="34.0" layoutY="114.0" text="Description">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <TextField fx:id="idtext" layoutX="194.0" layoutY="49.0" prefHeight="25.0" prefWidth="280.0" />
+      <TextArea fx:id="iddescription" layoutX="184.0" layoutY="114.0" prefHeight="153.0" prefWidth="288.0" />
+      <TableView fx:id="tableservices" layoutX="89.0" layoutY="282.0" prefHeight="200.0" prefWidth="558.0">
+        <columns>
+          <TableColumn fx:id="idintitule" prefWidth="138.0" text="Intitulé" />
+          <TableColumn fx:id="iddesc" prefWidth="419.0" text="Description" />
+        </columns>
+      </TableView>
+      <Button fx:id="idajout" layoutX="184.0" layoutY="509.0" mnemonicParsing="false" onAction="#ajout" text="Ajouter" />
+      <Button fx:id="idmodif" layoutX="315.0" layoutY="509.0" mnemonicParsing="false" onAction="#modifier" text="Modifier" />
+      <Button fx:id="idsupp" layoutX="448.0" layoutY="509.0" mnemonicParsing="false" onAction="#supprimer" text="Supprimer" />
+      <Button fx:id="idaccueil" layoutX="681.0" layoutY="531.0" mnemonicParsing="false" onAction="#accueil" text="Accueil" />
+      <ImageView fitHeight="52.0" fitWidth="96.0">
+         <image>
+            <Image url="@../../../images/tbadellogo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

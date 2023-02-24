@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="664.0" prefWidth="936.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.gestionBiensEtServices.gui.TestBienController">
+   <children>
+      <Label layoutX="36.0" layoutY="30.0" text="Libellé">
+         <font>
+            <Font size="23.0" />
+         </font></Label>
+      <Label layoutX="29.0" layoutY="123.0" text="Description">
+         <font>
+            <Font size="23.0" />
+         </font></Label>
+      <TextField fx:id="idlib" layoutX="164.0" layoutY="34.0" prefHeight="25.0" prefWidth="245.0" />
+      <TextArea fx:id="iddesc" layoutX="164.0" layoutY="93.0" prefHeight="93.0" prefWidth="245.0" />
+      <Button fx:id="image" layoutX="563.0" layoutY="223.0" mnemonicParsing="false" onMouseClicked="#importerimage" text="Upload" />
+      <Label layoutX="490.0" layoutY="219.0" text="Photo">
+         <font>
+            <Font size="23.0" />
+         </font></Label>
+      <TableView fx:id="tablebiens" layoutX="62.0" layoutY="300.0" prefHeight="273.0" prefWidth="797.0">
+         <columns>
+            <TableColumn fx:id="idlibelle" prefWidth="182.0" text="Libellé" />
+            <TableColumn fx:id="iddescription" prefWidth="153.0" text="Description" />
+            <TableColumn fx:id="imageg" prefWidth="224.0" text="Image" />
+            <TableColumn fx:id="idcatt" prefWidth="235.0" text="Catégorie" />
+         </columns>
+      </TableView>
+      <Button fx:id="btnajout" layoutX="232.0" layoutY="596.0" mnemonicParsing="false" onAction="#ajouterbien" text="Ajouter" />
+      <Button fx:id="btnmodif" layoutX="401.0" layoutY="596.0" mnemonicParsing="false" onMouseClicked="#modifierbien" text="Modifier" />
+      <Button fx:id="btnsupp" layoutX="615.0" layoutY="596.0" mnemonicParsing="false" onAction="#supprimerbien" text="Supprimer" />
+      <ImageView fx:id="imagebien" fitHeight="150.0" fitWidth="200.0" layoutX="563.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true" />
+      <TextField fx:id="txtImage" layoutX="615.0" layoutY="223.0" />
+      <Button fx:id="vm" layoutX="401.0" layoutY="621.0" mnemonicParsing="false" onAction="#vmm" prefHeight="25.0" prefWidth="61.0" text="Valider " />
+      <Label layoutX="38.0" layoutY="219.0" text="Catégorie">
+         <font>
+            <Font size="23.0" />
+         </font></Label>
+      <ComboBox fx:id="idcategor" layoutX="164.0" layoutY="223.0" onMouseClicked="#remplircategor" prefHeight="25.0" prefWidth="245.0" />
+      <Button fx:id="idaccueil" layoutX="878.0" layoutY="634.0" mnemonicParsing="false" onAction="#acceuil" text="Accueil" />
+      <ImageView disable="true" fitHeight="54.0" fitWidth="85.0" focusTraversable="true" layoutY="-4.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);">
+         <image>
+            <Image url="@../../../images/tbadellogo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
