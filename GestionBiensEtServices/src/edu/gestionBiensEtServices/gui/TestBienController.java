@@ -59,8 +59,6 @@ public class TestBienController implements Initializable {
     private Button vm;
 
     @FXML
-    private TableColumn<Bien, ImageView> imageg;
-    @FXML
     private TextField txtImage;
 
     @FXML
@@ -81,8 +79,7 @@ public class TestBienController implements Initializable {
     private TableColumn<Bien, String> idetat;
     @FXML
     private TableColumn<Bien, String> idcatt;
-    private File file;
-    String pic;
+   
     @FXML
     private TableColumn<Bien, String> iddescription;
     @FXML
@@ -90,9 +87,7 @@ public class TestBienController implements Initializable {
     @FXML
     private Button btnmodif;
     @FXML
-    private Button btnsupp;
-    @FXML
-    private ImageView imagebien;
+    private Button btnsupp
     @FXML
     private TextField idt;
     BienServices ser = new BienServices();
@@ -108,7 +103,6 @@ public class TestBienController implements Initializable {
         ObservableList<Bien> data = FXCollections.observableArrayList(s.afficher());
         idlibelle.setCellValueFactory(new PropertyValueFactory<>("nom"));
         iddescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        imageg.setCellValueFactory(new PropertyValueFactory<>("image"));
         idcatt.setCellValueFactory(new PropertyValueFactory<>("categorie"));
         tablebiens.setItems(data);
     }
@@ -128,12 +122,7 @@ public class TestBienController implements Initializable {
         fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
         pic = new Upload().upload(file, "\\images");
         txtImage.setText("File" + file);
-        if (file != null) {
-            Image image = new Image(file.toURI().toString());
-            imagebien.setImage(image);
-        } else {
-            System.out.println("No file selected.");
-        }
+        
 
     }
 
