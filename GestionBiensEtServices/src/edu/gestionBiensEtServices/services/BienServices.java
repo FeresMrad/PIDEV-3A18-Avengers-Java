@@ -58,12 +58,7 @@ public class BienServices implements BienInterface<Bien> {
                 String description = rs.getString("description");
                 String imagePath = rs.getString("image");
                 String categorie = rs.getString("categorie");
-                File file = new File("C:\\Users\\Nouhe\\Documents\\NetBeansProjects\\GestionBiensEtServices\\src\\images\\" + imagePath);
-                Image image = new Image(file.toURI().toString());
-                ImageView imageView = new ImageView(image);
-                imageView.setFitHeight(150);
-                imageView.setFitWidth(200);
-                Bien bien = new Bien(id, name, description, imageView, categorie);
+          
                 list.add(bien);
             }
         } catch (SQLException ex) {
