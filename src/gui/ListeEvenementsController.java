@@ -15,10 +15,13 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -44,7 +47,8 @@ import javafx.stage.Stage;
 import services.EvenementsCRUD;
 import services.ParticipantsCRUD;
 import utils.MyConnection;
-
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
 
 /**
  * FXML Controller class
@@ -73,6 +77,12 @@ public class ListeEvenementsController implements Initializable {
     private TextArea tfdesc;
     @FXML
     private TextField tflieu;
+    
+    private AutoCompletionBinding<String> autoCompletionBinding;
+  private String[] possibleSugg = {"Ariana", "Beja", "Ben Arous", "Bizerte", "Gabes", "Gafsa", "Jendouba", "Kairouan", "Kasserine", "Kebili", "Kef", "Mahdia", "Manouba", "Medenine", "Monastir", "Nabeul", "Sfax", "Sidi Bouzid", "Siliana", "Sousse", "Tataouine", "Tozeur", "Tunis", "Zaghouan"};
+private Set<String> possibleSuggestions = new HashSet<>(Arrays.asList(possibleSugg));
+
+    
     @FXML
     private DatePicker datedeb;
     @FXML
@@ -98,23 +108,6 @@ public class ListeEvenementsController implements Initializable {
      public void showEvent(){
        tableevent.getItems().clear();
       
-//              try{
-//       
-//       String sql ="select id,nom,description,date_debut,date_fin,lieu from evenements";
-//          
-//        Statement st= MyConnection.getInstance().getCnx().createStatement();
-//        ResultSet rs = st.executeQuery(sql);
-       // PreparedStatement st = MyConnection.getInstance().getCnx()
-//                    .prepareStatement(sql);
-//        ResultSet rs= st.executeQuery();
-      
-//        while (rs.next()){
-//           data.add(new Evenements(rs.getInt("id"),rs.getString("nom"),rs.getString("description"),rs.getDate("date_debut"),rs.getDate("date_fin"),rs.getString("lieu")));
-//          
-//        }
-//     }catch (SQLException ex){
-//        System.out.println(ex.getMessage());
-//    }
 
 
      EvenementsCRUD pcd= new EvenementsCRUD();
@@ -138,6 +131,11 @@ public class ListeEvenementsController implements Initializable {
         // TODO
        
        showEvent();
+       
+       
+     autoCompletionBinding = TextFields.bindAutoCompletion(tflieu, possibleSuggestions);
+
+       
     }    
     @FXML
     private void saveEvent(ActionEvent event) {
@@ -150,7 +148,20 @@ public class ListeEvenementsController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText("Veuillez remplir tous les champs");
         alert.showAndWait();
-    } else {
+    } else if (checkEventName(tfnom.getText())) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Erreur");
+        alert.setHeaderText(null);
+        alert.setContentText("L'événement existe déjà");
+        alert.showAndWait();
+    } else if (datefin.getValue().isBefore(datedeb.getValue())) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Erreur");
+        alert.setHeaderText(null);
+        alert.setContentText("La date de fin doit être supérieure à la date de début");
+        alert.showAndWait();
+    } 
+    else {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Ajouter un événement");
         alert.setHeaderText(null);
@@ -173,10 +184,18 @@ public class ListeEvenementsController implements Initializable {
             showEvent();
         }
     }
+}
 
+private boolean checkEventName(String nom) {
+    EvenementsCRUD pcd = new EvenementsCRUD();
+    List<Evenements> list = pcd.entitiesList();
+    for (Evenements e : list) {
+        if (e.getNom().equalsIgnoreCase(nom)) {
+            return true;
+        }
     }
-    
-    
+    return false;
+}
     
  private int EventSelectionner() {
         int selectedItem = tableevent.getSelectionModel().getSelectedItem().getId();
@@ -208,6 +227,25 @@ public class ListeEvenementsController implements Initializable {
         alert.showAndWait();
         return;
     }
+       // Vérifier que la date de fin est supérieure à la date de début
+    if (datefin.getValue().isBefore(datedeb.getValue())) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Date de fin invalide");
+        alert.setContentText("La date de fin doit être supérieure à la date de début.");
+        alert.showAndWait();
+        return;
+    }
+
+    // Vérifier que le nom de l'événement n'existe pas déjà dans la base
+    String newNom = tfnom.getText();
+    if (!newNom.equals(selectedEvent.getNom()) && checkEventName(newNom)) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Nom d'événement déjà existant");
+        alert.setContentText("Un événement portant le même nom existe déjà dans la base de données.");
+        alert.showAndWait();
+        return;
+    }
+
 
     // Afficher une alerte de confirmation avant la modification
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -281,7 +319,6 @@ public class ListeEvenementsController implements Initializable {
     }
 
     @FXML
-
     private void listeP(ActionEvent event) {
     Evenements selectedEvent = tableevent.getSelectionModel().getSelectedItem();
        if (selectedEvent == null) {
@@ -302,6 +339,8 @@ public class ListeEvenementsController implements Initializable {
         dc.setTfidevent(String.valueOf(resid));
         dc.setTfeventnom(resnom);
         dc.setEvent(selectedEvent.getId());
+        dc.setDateE(selectedEvent.getDate_debut());
+        dc.setLieue(selectedEvent.getLieu());
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);

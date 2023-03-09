@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="605.0" prefWidth="1031.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ParticiperEController">
    <children>
-      <Button fx:id="btnparticipier" layoutX="436.0" layoutY="143.0" mnemonicParsing="false" onAction="#participier" prefHeight="31.0" prefWidth="136.0" text="Participer" />
+      <Button fx:id="btnparticipier" layoutX="516.0" layoutY="143.0" mnemonicParsing="false" onAction="#participier" prefHeight="31.0" prefWidth="136.0" text="Participer" />
       <TableView fx:id="tableevent" layoutX="51.0" layoutY="216.0" prefHeight="342.0" prefWidth="927.0" style="-fx-background-color: #CCF5F1;">
         <columns>
           <TableColumn fx:id="tnom" prefWidth="167.0" text="Nom" />
@@ -31,5 +31,6 @@
             <Image url="@tbadellogo.png" />
          </image>
       </ImageView>
+      <Button fx:id="consult" layoutX="306.0" layoutY="143.0" mnemonicParsing="false" onAction="#consulter" prefHeight="31.0" prefWidth="128.0" text="Consulter" />
    </children>
 </AnchorPane>

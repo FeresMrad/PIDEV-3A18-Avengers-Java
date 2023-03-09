@@ -1,19 +1,34 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package interfaces;
 
+import entities.Reclamation;
 import java.util.List;
 
 /**
  *
- * @author BACEM
+ * @author Maissa
  */
-public interface EntityCRUD<T> {
-    public void addEntity(T t);
-    public List<T> entitiesList();
-    public void delEvenements(int t);
-    public void updEvenements(T t,int x);
-//    public List<T>entitiesList2();
+public interface EntityCRUD <T> {
+  // public void addEntity(T t);
+   
+
+//     public void supprimerReclamation(T t);
+//     public void updateReclamation(T t);
+//     public List<T> displayReclamations();
+//    
+    //public void ajouterReclaamtion(T t );
+    public void ajouterReclamation(T t);
+    public List<T>entitiesList();
+    public void suppReclamation(int id);
+     public void updReclamation(T t,int x);
+   
+     public void addEntity(Reclamation t);
+   //  public Reclamation getById(int id);
+      public Reclamation FindReclamationById(int id); 
+     public int  getNumberOfReclamation(int id);
+
 }

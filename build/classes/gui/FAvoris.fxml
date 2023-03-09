@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="433.0" prefWidth="661.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FAvorisController">
+   <children>
+      <Label layoutX="166.0" layoutY="72.0" text="Liste de favoris">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tablefavoris" layoutX="57.0" layoutY="150.0" prefHeight="238.0" prefWidth="527.0">
+        <columns>
+          <TableColumn fx:id="idl" prefWidth="75.0" text="Libellé" />
+          <TableColumn fx:id="idc" prefWidth="105.0" text="Catégorie" />
+            <TableColumn fx:id="idd" prefWidth="159.0" text="Description" />
+            <TableColumn fx:id="idi" prefWidth="111.0" text="Image" />
+            <TableColumn fx:id="idsupprimer" prefWidth="75.0" text="Retirer " />
+        </columns>
+      </TableView>
+      <ImageView disable="true" fitHeight="54.0" fitWidth="85.0" focusTraversable="true" layoutX="10.0" layoutY="6.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);">
+         <image>
+            <Image url="@../../../images/tbadellogo.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="idconsultation" layoutX="545.0" layoutY="407.0" mnemonicParsing="false" onAction="#consultation" prefHeight="25.0" prefWidth="113.0" text="Consutation Biens" />
+   </children>
+</AnchorPane>

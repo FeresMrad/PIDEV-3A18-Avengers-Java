@@ -4,7 +4,6 @@
  */
 package services;
 
-import interfaces.EntityCRUD;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -16,13 +15,14 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import interfaces.EventCRUDB;
 
 
 /**
  *
  * @author BACEM
  */
-public class EvenementsCRUD implements EntityCRUD<Evenements>{
+public class EvenementsCRUD implements EventCRUDB<Evenements>{
 
 //    @Override
 //    public void addEntity2(Evenements t) {
@@ -61,6 +61,83 @@ public class EvenementsCRUD implements EntityCRUD<Evenements>{
         }
     }
            
+//           public void addComment(Evenements t,int x) {
+//         try {
+//        // Insert the new comment
+////        String insertQuery = "INSERT INTO evenements (comment) VALUES (?)";
+////        PreparedStatement insertStatement = MyConnection.getInstance().getCnx().prepareStatement(insertQuery);
+////        insertStatement.setString(1, t.getComment());
+////        insertStatement.executeUpdate();
+//
+//        // Update the existing row with the corresponding ID
+//        String updateQuery = "UPDATE evenements SET comment = ? WHERE id = ?";
+//        PreparedStatement updateStatement = MyConnection.getInstance().getCnx().prepareStatement(updateQuery);
+//        
+//        updateStatement.setString(1, t.getComment());
+//        updateStatement.setInt(2, t.getId());
+//        updateStatement.executeUpdate();
+//
+//        System.out.println("Commentaire ajouté");
+//    } catch (SQLException ex) {
+//        System.out.println(ex.getMessage());
+//    }
+//    }
+           public void addComment(Evenements t,int x) {
+    try {
+//        String Query = "UPDATE evenements SET comment = CONCAT(comment,'/', ?) WHERE id = ?";
+ 
+//        PreparedStatement updateStatement = MyConnection.getInstance().getCnx().prepareStatement(Query);
+//        
+//        updateStatement.setString(1, " " + t.getComment()); // Add a space before the new comment
+//        updateStatement.setInt(2, t.getId());
+//        updateStatement.executeUpdate();
+
+        
+             String Query = "INSERT INTO reactionev (commentaire,evenement_id,user_id) "
+                + "VALUES(?,?,?) ";
+             PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(Query);
+          st.setString(1, " " + t.getComment()); // 
+        st.setInt(2, t.getId());
+        st.setInt(3, 5);
+        st.executeUpdate();
+
+             
+             
+        System.out.println("Commentaire ajouté");
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+    }
+}
+
+           
+           
+           
+           public void addLike(int evenement_id, int newLike) {
+    try {
+        String req = "UPDATE evenements SET likee=? WHERE id=?";
+        PreparedStatement ps = MyConnection.getInstance().getCnx().prepareStatement(req);
+        ps.setInt(1, newLike);
+        ps.setInt(2, evenement_id);
+        ps.executeUpdate();
+        System.out.println("like Added");
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+    }
+}
+
+
+                   public void adddisLike(int evenement_id, int newdisLike) {
+    try {
+        String req = "UPDATE evenements SET dislikee=? WHERE id=?";
+        PreparedStatement ps = MyConnection.getInstance().getCnx().prepareStatement(req);
+        ps.setInt(1, newdisLike);
+        ps.setInt(2, evenement_id);
+        ps.executeUpdate();
+        System.out.println("dislike Added");
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+    }
+}
            
            
            
@@ -91,34 +168,34 @@ public class EvenementsCRUD implements EntityCRUD<Evenements>{
     
     
     
-//    public Evenements findById(int id) {
-//    String query = "SELECT * FROM evenements WHERE id=?";
-//    PreparedStatement statement;
-//    ResultSet resultSet;
-//    Evenements evenement = null;
-//
-//    try {
-//        PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(query);
-//        st.setInt(1, id);
-//        resultSet = st.executeQuery();
-//
-//        if (resultSet.next()) {
-//            evenement = new Evenements(
-//                resultSet.getInt("id"),
-//                resultSet.getString("nom"),
-//                resultSet.getString("description"),
-//                resultSet.getDate("date_debut"),
-//                resultSet.getDate("date_fin"),
-//                resultSet.getString("lieu")
-//            );
-//        }
-//    } catch (SQLException e) {
-//        System.out.println("Erreur lors de la récupération de l'événement : " + e.getMessage());
-//    }
-//
-//    return evenement;
-//}
-//    
+    public Evenements findById(int id) {
+    String query = "SELECT * FROM evenements WHERE id=?";
+    PreparedStatement statement;
+    ResultSet resultSet;
+    Evenements evenement = null;
+
+    try {
+        PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(query);
+        st.setInt(1, id);
+        resultSet = st.executeQuery();
+
+        if (resultSet.next()) {
+            evenement = new Evenements(
+                resultSet.getInt("id"),
+                resultSet.getString("nom"),
+                resultSet.getString("description"),
+                resultSet.getDate("date_debut"),
+                resultSet.getDate("date_fin"),
+                resultSet.getString("lieu")
+            );
+        }
+    } catch (SQLException e) {
+        System.out.println("Erreur lors de la récupération de l'événement : " + e.getMessage());
+    }
+
+    return evenement;
+}
+    
     
     
     

@@ -17,10 +17,64 @@ public class Evenements {
     private Date date_debut;
     private Date date_fin;
     private String lieu;
+    
+    private int likee;
+    private int dislikee;
+    private String comment;
+
+ 
+  
+ 
+
+    public int getLikee() {
+        return likee;
+    }
+
+    public void setLikee(int likee) {
+        this.likee = likee;
+    }
+
+    public int getDislikee() {
+        return dislikee;
+    }
+
+    public void setDislikee(int dislikee) {
+        this.dislikee = dislikee;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
     public Evenements() {
     }
+    
+    
+    
+    
+   public Evenements(int likee, int dislikee, String comment) {
+        this.likee = likee;
+        this.dislikee = dislikee;
+        this.comment = comment;
+    }
 
+   
+      public Evenements(int id, String comment) {
+        this.id = id;
+        this.comment = comment;
+    }
+
+   
+    public Evenements(String comment) {
+        this.comment = comment;
+    }
+    
+    
+    
     public Evenements(String nom, String description, Date date_debut, Date date_fin, String lieu) {
         this.nom = nom;
         this.description = description;
@@ -29,6 +83,9 @@ public class Evenements {
         this.lieu = lieu;
     }
 
+    
+    
+    
     public Evenements(int id, String nom, String description, Date date_debut, Date date_fin, String lieu) {
         this.id = id;
         this.nom = nom;
@@ -38,6 +95,10 @@ public class Evenements {
         this.lieu = lieu;
     }
 
+    
+    
+    
+    
     public Evenements(int id, String nom, String description, Date date_debut, Date date_fin) {
         this.id = id;
         this.nom = nom;
@@ -46,6 +107,8 @@ public class Evenements {
         this.date_fin = date_fin;
     }
 
+    
+    
     public Evenements(int id, String nom, String description, String lieu) {
         this.id = id;
         this.nom = nom;
@@ -103,6 +166,15 @@ public class Evenements {
 
     public void setLieu(String lieu) {
         this.lieu = lieu;
+    }
+
+    public Evenements(int id, int likee) {
+        this.id = id;
+        this.likee = likee;
+    }
+
+    public Evenements(int id) {
+        this.id = id;
     }
 
     @Override

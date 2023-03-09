@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="781.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GraphesController">
+   <children>
+      <AnchorPane fx:id="paneBarChart" layoutX="400.0" layoutY="92.0" prefHeight="268.0" prefWidth="328.0" />
+      <AnchorPane fx:id="panePieChart" layoutX="15.0" layoutY="92.0" prefHeight="268.0" prefWidth="330.0" />
+   </children>
+</AnchorPane>

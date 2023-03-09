@@ -12,10 +12,13 @@
 
 <AnchorPane id="AnchorPane" prefHeight="649.0" prefWidth="1017.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListeParticipantsController">
    <children>
-      <TableView fx:id="tableparticipants" layoutX="224.0" layoutY="265.0" prefHeight="271.0" prefWidth="569.0">
+      <TableView fx:id="tableparticipants" layoutX="157.0" layoutY="265.0" prefHeight="271.0" prefWidth="750.0">
         <columns>
-          <TableColumn fx:id="tid" prefWidth="272.0" text="ID" />
-            <TableColumn fx:id="tuserid" prefWidth="296.0" text="User ID" />
+          <TableColumn fx:id="tid" prefWidth="77.0" text="ID" />
+            <TableColumn fx:id="tuserid" prefWidth="146.0" text="User ID" />
+            <TableColumn id="tnom" fx:id="tnom" prefWidth="114.0" text="Nom" />
+            <TableColumn id="tprenom" fx:id="tprenom" prefWidth="122.0" text="Prénom" />
+            <TableColumn id="tmail" fx:id="tmail" prefWidth="290.0" text="E-mail" />
         </columns>
       </TableView>
       <Label layoutX="327.0" layoutY="80.0" prefHeight="53.0" prefWidth="364.0" text="Liste des Participants">
@@ -24,14 +27,16 @@
          </font>
       </Label>
       <Label layoutX="132.0" layoutY="202.0" text="ID Evenement" />
-      <TextField fx:id="tfidevent" editable="false" layoutX="261.0" layoutY="197.0" />
+      <TextField fx:id="tfidevent" editable="false" layoutX="261.0" layoutY="197.0" opacity="0.76" />
       <Label layoutX="537.0" layoutY="202.0" text="Evenement" />
-      <TextField fx:id="tfeventnom" editable="false" layoutX="651.0" layoutY="197.0" />
+      <TextField fx:id="tfeventnom" editable="false" layoutX="651.0" layoutY="197.0" opacity="0.76" />
       <ImageView fitHeight="189.0" fitWidth="220.0" layoutY="-42.0">
          <image>
             <Image url="@tbadellogo.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnretour" layoutX="443.0" layoutY="559.0" mnemonicParsing="false" onAction="#retourE" prefHeight="31.0" prefWidth="133.0" text="Retour" />
+      <Button fx:id="btnretour" layoutX="275.0" layoutY="559.0" mnemonicParsing="false" onAction="#retourE" prefHeight="31.0" prefWidth="133.0" text="Retour" />
+      <Button layoutX="625.0" layoutY="559.0" mnemonicParsing="false" onAction="#genererpdf" prefHeight="31.0" prefWidth="133.0" text="Générer PDF" />
+      <Button layoutX="448.0" layoutY="559.0" mnemonicParsing="false" onAction="#sendReminderToParticipants" text="Envoyer Reminder" />
    </children>
 </AnchorPane>
