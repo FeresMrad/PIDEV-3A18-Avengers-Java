@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.BienDetailController">
+   <children>
+      <Label fx:id="lblNom" layoutX="107.0" layoutY="116.0" text="Nom :">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label fx:id="lblDescription" layoutX="126.0" layoutY="254.0" text="Description ::">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect></Label>
+      <Label fx:id="lblCategorie" layoutX="110.0" layoutY="183.0" text="Catégorie : ">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="375.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="31.0" layoutY="116.0" text="Libellé : ">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label layoutX="27.0" layoutY="254.0" text="Description :">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label layoutX="27.0" layoutY="183.0" text="Ctégorie :">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <ImageView disable="true" fitHeight="54.0" fitWidth="85.0" focusTraversable="true" layoutX="10.0" layoutY="6.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);">
+         <image>
+            <Image url="@../../../images/tbadellogo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

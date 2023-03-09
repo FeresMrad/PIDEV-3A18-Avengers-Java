@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package services;
 import entities.Participants;
 import interfaces.CRUDP;
@@ -48,6 +44,8 @@ public class ParticipantsCRUD implements CRUDP<Participants> {
              
         try {
             String requete = "SELECT * FROM participants";
+//           String requete=" SELECT p.id, p.user_id, u.nom, u.prenom, u.email FROM participants p JOIN users u ON p.user_id = u.id WHERE p.evenement_id = ?";
+
             Statement st=MyConnection.getInstance().getCnx().createStatement();
             ResultSet rs= st.executeQuery(requete);
             
@@ -91,28 +89,97 @@ public class ParticipantsCRUD implements CRUDP<Participants> {
 //        }
 //    return myList;
 //    }
-        public List<Participants> entitiesListP(int x) {
-        List<Participants> myList = new ArrayList<>();
-        try {
-            String requete = "SELECT * FROM participants WHERE evenement_id=?";
-            PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
-            pst.setInt(1, x);
-            ResultSet rs = pst.executeQuery();
-
-            while (rs.next()) {
-                Participants p = new Participants();
-                p.setId(rs.getInt(1));
-                p.setEvenements_id(rs.getInt("evenement_id"));
-                p.setUser_id(rs.getInt("user_id"));
-                myList.add(p);
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+//    @Override
+//        public List<Participants> entitiesListP(int x) {
+//        List<Participants> myList = new ArrayList<>();
+//        try {
+//          //  String requete = "SELECT * FROM participants WHERE evenement_id=?";
+//          String requete= "SELECT p.id, p.user_id, u.nom, u.prenom, u.email FROM participants p JOIN users u ON p.user_id = u.id WHERE p.evenement_id = ?";
+//
+//            PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
+//            pst.setInt(1, x);
+//            ResultSet rs = pst.executeQuery();
+//
+//            while (rs.next()) {
+//                Participants p = new Participants();
+//                p.setId(rs.getInt(1));
+//                p.setEvenements_id(rs.getInt("evenement_id"));
+//                p.setUser_id(rs.getInt("user_id"))
+//                            ;
+//                myList.add(p);
+//            }
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//        }
+//        return myList;
+//    }
+    @Override
+public List<Participants> entitiesListP(int x) {
+    List<Participants> myList = new ArrayList<>();
+    try {
+//          String requete = "SELECT * FROM participants WHERE evenement_id=?";
+       String requete= "SELECT p.id, p.user_id, u.nom, u.prenom, u.email FROM participants p JOIN users u ON p.user_id = u.id WHERE p.evenement_id = ?";
+        PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
+        pst.setInt(1, x);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            Participants p = new Participants();
+            p.setId(rs.getInt(1));
+            p.setEvenements_id(x);
+            p.setUser_id(rs.getInt("user_id"));
+            p.setNom(rs.getString("nom"));
+            p.setPrenom(rs.getString("prenom"));
+            p.setEmail(rs.getString("email"));
+            myList.add(p);
         }
-        return myList;
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
     }
+    return myList;
+}
+//    @Override
+//public List<Participants> entitiesListP(int x) {
+//    List<Participants> myList = new ArrayList<>();
+//    try {
+//        String requete = "SELECT * FROM participants WHERE evenement_id=?";
+//        PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
+//        pst.setInt(1, x);
+//        ResultSet rs = pst.executeQuery();
+//        while (rs.next()) {
+//            Participants p = new Participants();
+//            p.setId(rs.getInt(1));
+//            p.setEvenements_id(x);
+//            p.setUser_id(rs.getInt("user_id"));
+//            // Appeler getUserById pour récupérer le nom, le prénom et l'e-mail de l'utilisateur
+//            String[] userInfo = getUserById(rs.getInt("user_id"));
+//            if (userInfo != null) {
+//                p.setNom(userInfo[0]);
+//                p.setPrenom(userInfo[1]);
+//                p.setEmail(userInfo[2]);
+//            }
+//            myList.add(p);
+//        }
+//    } catch (SQLException ex) {
+//        System.out.println(ex.getMessage());
+//    }
+//    return myList;
+//}
 
 
+public String[] getUserById(int id) throws SQLException {
+    String query = "SELECT name, surname, email FROM users WHERE id = ?";
+    PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(query);
+    st.setInt(1, id);
+    ResultSet resultSet = st.executeQuery();
+    if (resultSet.next()) {
+        String[] user = new String[3];
+        user[0] = resultSet.getString("name");
+        user[1] = resultSet.getString("surname");
+        user[2] = resultSet.getString("email");
+        return user;
+    }
+    return null;
+}
     
     
     @Override

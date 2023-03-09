@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.DelRecController">
+   <children>
+      <TableView layoutY="200.0" prefHeight="200.0" prefWidth="600.0">
+        <columns>
+          <TableColumn fx:id="tfid" prefWidth="115.0" text="ID RECLAMATON" />
+          <TableColumn fx:id="tfuser" prefWidth="109.0" text="USER" />
+            <TableColumn fx:id="tfsubject" prefWidth="109.0" text="SUJET" />
+            <TableColumn fx:id="tfmessage" prefWidth="109.0" text="MESSAGE" />
+            <TableColumn fx:id="tfetat" prefWidth="157.0" text="ETAT" />
+        </columns>
+      </TableView>
+      <TextArea fx:id="iddescription" layoutX="78.0" layoutY="66.0" prefHeight="85.0" prefWidth="257.0" text="DESCRIPTION&#10;" />
+      <Label fx:id="reclam" layoutX="14.0" layoutY="40.0" text="ECRIVER VOTRE RECLAMATION" />
+      <Button fx:id="btndel" layoutX="432.0" layoutY="159.0" mnemonicParsing="false" text="Supprimer" />
+      <Button fx:id="btnup" layoutX="506.0" layoutY="159.0" mnemonicParsing="false" text="Modifier" />
+      <Button fx:id="btnsave" layoutX="357.0" layoutY="159.0" mnemonicParsing="false" text="enregistrer" />
+   </children>
+</AnchorPane>

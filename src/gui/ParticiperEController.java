@@ -7,21 +7,29 @@ package gui;
 
 import entities.Evenements;
 import entities.Participants;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import services.EvenementsCRUD;
 import services.ParticipantsCRUD;
 
@@ -48,6 +56,10 @@ public class ParticiperEController implements Initializable {
     private TableColumn<Evenements, Date> tdatefin;
     @FXML
     private TableColumn<Evenements, String> tlieu;
+    @FXML
+    private Button consult;
+    
+
     
    
 
@@ -121,7 +133,7 @@ public class ParticiperEController implements Initializable {
 
  
          ParticipantsCRUD pcd = new ParticipantsCRUD();
-        Participants t = new Participants(x,2);
+        Participants t = new Participants(x,5);
         pcd.addEntityP(t);
         // Afficher une alerte de succès
         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -134,4 +146,45 @@ public class ParticiperEController implements Initializable {
     }
     
 }
+
+ 
+
+    @FXML
+    private void consulter(ActionEvent event) throws IOException {
+
+        Evenements selectedEvent = tableevent.getSelectionModel().getSelectedItem();
+       if (selectedEvent == null) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Aucune ligne sélectionnée");
+        alert.setHeaderText(null);
+        alert.setContentText("Veuillez sélectionner une ligne pour afficher la liste des participants.");
+        alert.showAndWait();
+        return;
+    }
+       
+       
+        int resid = selectedEvent.getId();
+    String resnom=selectedEvent.getNom();
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("Event.fxml"));
+    try {
+        Parent root = loader.load();
+        EventController dc = loader.getController();
+        dc.setLblnom(resnom);
+        dc.setLdesc(selectedEvent.getDescription());
+        dc.setLlieu(selectedEvent.getLieu());
+        dc.setLdatedeb(selectedEvent.getDate_debut().toString());
+        dc.setLdatefin(selectedEvent.getDate_fin().toString());
+        dc.setEvent(selectedEvent.getId());
+
+
+        
+ 
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    } catch (IOException ex) {
+        Logger.getLogger(ListeParticipantsController.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
 }

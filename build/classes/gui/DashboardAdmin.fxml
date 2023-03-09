@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #3d3242;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DashboardAdminController">
+   <children>
+      <Pane prefHeight="100.0" prefWidth="20.0" />
+      <Label layoutX="51.0" layoutY="126.0" prefHeight="52.0" prefWidth="377.0" text="Dashboard" textFill="WHITE">
+         <font>
+            <Font name="Ebrima Bold" size="40.0" />
+         </font>
+      </Label>
+     
+     
+     
+  
+
+   
+      <Button layoutX="711.0" layoutY="413.0" mnemonicParsing="false" onAction="#Utilisateur" prefHeight="92.0" prefWidth="206.0" style="-fx-background-color: #9400d3;" text="Gérer Utilisateurs" textFill="WHITE">
+         <font>
+            <Font name="Ebrima Bold" size="20.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+      <Button fx:id="logobnt1" layoutX="870.0" layoutY="15.0" mnemonicParsing="false" onAction="#Actionlog" prefHeight="48.0" prefWidth="94.0" style="-fx-background-color: #9400d3;" text="LogOut" textFill="WHITE">
+         <font>
+            <Font name="Ebrima Bold" size="18.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect></Button>
+      <Button layoutX="420.0" layoutY="235.0" mnemonicParsing="false" prefHeight="92.0" prefWidth="206.0" style="-fx-background-color: #9400d3;" text="Gérer ????? " textFill="WHITE">
+         <font>
+            <Font name="Ebrima Bold" size="20.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+      <Button layoutX="420.0" layoutY="420.0" mnemonicParsing="false" prefHeight="92.0" prefWidth="226.0" style="-fx-background-color: #9400d3;" text="Gérer Reclamations" textFill="WHITE">
+         <font>
+            <Font name="Ebrima Bold" size="20.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+      <Button layoutX="130.0" layoutY="235.0" mnemonicParsing="false" prefHeight="92.0" prefWidth="206.0" style="-fx-background-color: #9400d3;" text="Gérer Produits" textFill="WHITE">
+         <font>
+            <Font name="Ebrima Bold" size="20.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+      <Button layoutX="130.0" layoutY="420.0" mnemonicParsing="false" prefHeight="92.0" prefWidth="206.0" style="-fx-background-color: #9400d3;" text="Gérer ?????" textFill="WHITE">
+         <font>
+            <Font name="Ebrima Bold" size="20.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+      <Button layoutX="710.0" layoutY="235.0" mnemonicParsing="false" prefHeight="92.0" prefWidth="206.0" style="-fx-background-color: #9400d3;" text="Gérer Evenements" textFill="WHITE">
+         <font>
+            <Font name="Ebrima Bold" size="20.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+      <ImageView fitHeight="200.0" fitWidth="200.0" layoutY="-60.0">
+         <image>
+            <Image url="@../../../../../../../OneDrive/Bureau/Logopit_1675351872929.png" />
+         </image>
+      </ImageView>
+   
+   </children>
+</AnchorPane>

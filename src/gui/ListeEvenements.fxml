@@ -17,8 +17,8 @@
       <TableView fx:id="tableevent" layoutX="64.0" layoutY="293.0" prefHeight="336.0" prefWidth="877.0">
         <columns>
           <TableColumn fx:id="tid" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="tnom" prefWidth="110.0" text="Nom" />
-            <TableColumn fx:id="tdesc" prefWidth="289.0" text="Description" />
+          <TableColumn fx:id="tnom" prefWidth="142.0" text="Nom" />
+            <TableColumn fx:id="tdesc" prefWidth="257.0" text="Description" />
             <TableColumn fx:id="tdatedeb" prefWidth="131.0" text="Date Debut" />
             <TableColumn fx:id="tdatefin" prefWidth="127.0" text="Date Fin" />
             <TableColumn fx:id="tlieu" prefWidth="144.0" text="Lieu" />
