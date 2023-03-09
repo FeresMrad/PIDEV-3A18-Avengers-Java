@@ -7,8 +7,11 @@ package gui;
 
 
 import entities.Service;
+import static gui.ProfilMembreController.idcli;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -31,6 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import services.ServiceService;
+import utils.MyConnection;
 
 /**
  * FXML Controller class
@@ -57,7 +61,8 @@ public class AffichageServiceController implements Initializable {
     private Button idsupp;
     @FXML
     private Button idaccueil;
-
+        @FXML
+    private Button id1;
     /**
      * Initializes the controller class.
      */
@@ -77,6 +82,7 @@ public class AffichageServiceController implements Initializable {
 
     @FXML
     private void ajout(ActionEvent event) throws IOException {
+         int userId=idcli;
         if (idtext.getText().isEmpty() || iddescription.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Erreur");
@@ -94,7 +100,7 @@ public class AffichageServiceController implements Initializable {
                 String resDesc = iddescription.getText();
                 ServiceService ser = new ServiceService();
                 Service s = new Service(resNom, resDesc);
-                ser.ajouterService(s);
+                ser.ajouterService(s,userId);
                 System.out.println("OK!");
                 tableservices.getItems().clear();
                 showService();
@@ -110,75 +116,118 @@ public class AffichageServiceController implements Initializable {
     }
 
     @FXML
-    void modifier(ActionEvent event) throws SQLException {
-        Service selectedService = tableservices.getSelectionModel().getSelectedItem();
-        if (selectedService == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Aucun service est sélectionné");
-            alert.setContentText("Veuillez sélectionner un service à modifier.");
-            alert.showAndWait();
-            return;
-        }
-        if (idtext.getText().isEmpty() || iddescription.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Champs vides");
-            alert.setContentText("Veuillez remplir tous les champs.");
-            alert.showAndWait();
-            return;
-        }
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation de modification");
-        alert.setHeaderText("Vous êtes sur le point de modifier le service suivant :");
-        alert.setContentText("Nom : " + selectedService.getIntitule() + "\n"
-                + "Description : " + selectedService.getDescription() + "\n"
-                + "Êtes-vous sûr de vouloir modifier ce service ?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            String resNom = idtext.getText();
-            String resDesc = iddescription.getText();
-            ServiceService ser = new ServiceService();
-            Service s = new Service(resNom, resDesc);
-            ser.updateService(s, selectedService.getId());
-            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-            successAlert.setTitle("Modification réussie");
-            successAlert.setContentText("Service modifié avec succès.");
-            successAlert.showAndWait();
-            tableservices.getItems().clear();
-            showService();
-        }
+void modifier(ActionEvent event) throws SQLException {
+int userId = idcli;
+Service selectedService = tableservices.getSelectionModel().getSelectedItem();
+if (selectedService == null) {
+Alert alert = new Alert(Alert.AlertType.WARNING);
+alert.setTitle("Aucun service sélectionné");
+alert.setContentText("Veuillez sélectionner un service à modifier.");
+alert.showAndWait();
+return;
+}
+if (idtext.getText().isEmpty() || iddescription.getText().isEmpty()) {
+Alert alert = new Alert(Alert.AlertType.WARNING);
+alert.setTitle("Champs vides");
+alert.setContentText("Veuillez remplir tous les champs.");
+alert.showAndWait();
+return;
+}
+Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+alert.setTitle("Confirmation de modification");
+alert.setHeaderText("Vous êtes sur le point de modifier le service suivant :");
+alert.setContentText("Nom : " + selectedService.getIntitule() + "\n"
++ "Description : " + selectedService.getDescription() + "\n"
++ "Êtes-vous sûr de vouloir modifier ce service ?");
+Optional<ButtonType> result = alert.showAndWait();
+if (result.isPresent() && result.get() == ButtonType.OK) {
+int selectedItem = tableservices.getSelectionModel().getSelectedItem().getId();
+String sql = "SELECT id_utilisateur FROM services WHERE id=? AND id_utilisateur=?";
+PreparedStatement pstmt = MyConnection.getInstance().getCnx().prepareStatement(sql);
+pstmt.setInt(1, selectedItem);
+pstmt.setInt(2, userId);
+ResultSet rs = pstmt.executeQuery();
+int bienUserId = -1;
+if (rs.next()) {
+bienUserId = rs.getInt("id_utilisateur");
+}
+if (userId != bienUserId) {
+Alert alert2 = new Alert(Alert.AlertType.ERROR);
+alert2.setTitle("Erreur");
+alert2.setHeaderText(null);
+alert2.setContentText("Vous n'êtes pas autorisé à modifier ce service.");
+alert2.showAndWait();
+return;
+}
+String resNom = idtext.getText();
+String resDesc = iddescription.getText();
+ServiceService ser = new ServiceService();
+Service s = new Service(resNom, resDesc);
+ser.updateService(s, selectedService.getId());
+Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+successAlert.setTitle("Modification réussie");
+successAlert.setContentText("Service modifié avec succès.");
+successAlert.showAndWait();
+tableservices.getItems().clear();
+showService();
+}}
 
+  @FXML
+private void supprimer(ActionEvent event) throws SQLException {
+    int userId=idcli;
+    if (tableservices.getSelectionModel().getSelectedItems().isEmpty()) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Aucune ligne sélectionnée");
+        alert.setContentText("Veuillez sélectionner le service à supprimer.");
+        alert.showAndWait();
+        return;
     }
-
-    @FXML
-    private void supprimer(ActionEvent event) {
-        if (tableservices.getSelectionModel().getSelectedItems().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Aucune ligne sélectionnée");
-            alert.setContentText("Veuillez sélectionner le service à supprimer.");
-            alert.showAndWait();
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setTitle("Supprimer le service");
+    alert.setHeaderText(null);
+    alert.setContentText("Êtes-vous sûr de vouloir supprimer ce service ?");
+    Optional<ButtonType> result = alert.showAndWait();
+    if (result.get() == ButtonType.OK) {
+        int selectedItem = tableservices.getSelectionModel().getSelectedItem().getId();
+        String sql = "SELECT id_utilisateur FROM services WHERE id=?";
+        PreparedStatement pstmt = MyConnection.getInstance().getCnx().prepareStatement(sql);
+        pstmt.setInt(1, selectedItem);
+        ResultSet rs = pstmt.executeQuery();
+        int bienUserId = -1;
+        if (rs.next()) {
+            bienUserId = rs.getInt("id_utilisateur");
+        }
+        if (userId != bienUserId) {
+            Alert alert2 = new Alert(Alert.AlertType.ERROR);
+            alert2.setTitle("Erreur");
+            alert2.setHeaderText(null);
+            alert2.setContentText("Vous n'êtes pas autorisé à supprimer ce bien.");
+            alert2.showAndWait();
             return;
         }
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Supprimer le service");
-        alert.setHeaderText(null);
-        alert.setContentText("Êtes-vous sûr de vouloir supprimer ce service ?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            int selectedItem = tableservices.getSelectionModel().getSelectedItem().getId();
-            ServiceService ser = new ServiceService();
-            ser.supprimerService(selectedItem);
-            System.out.println("OK!");
-            tableservices.getItems().clear();
-            showService();
-        }
+        ServiceService ser = new ServiceService();
+        ser.supprimerService(selectedItem);
+        System.out.println("OK!");
+        tableservices.getItems().clear();
+        showService();
     }
-    
+}
+
+
     @FXML
     void accueil(ActionEvent event) throws IOException {
-        Parent page2 = FXMLLoader.load(getClass().getResource("Accueil.fxml"));
+        Parent page2 = FXMLLoader.load(getClass().getResource("InterfaceMembre.fxml"));
         Scene scene2 = new Scene(page2);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(scene2);
         app_stage.show();
     }
+    /* @FXML
+    void interface1(ActionEvent event) throws IOException {
+        Parent page2 = FXMLLoader.load(getClass().getResource("InterfaceMembre.fxml"));
+        Scene scene2 = new Scene(page2);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.setScene(scene2);
+        app_stage.show();
+    }*/
 }

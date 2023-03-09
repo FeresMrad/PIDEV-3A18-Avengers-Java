@@ -23,7 +23,7 @@ public class Upload {
 
     public String upload(File file, String dossier) throws FileNotFoundException, IOException {
         BufferedOutputStream stream = null;
-        String globalPath = "C:\\Users\\Nouhe\\Documents\\NetBeansProjects\\GestionBiensEtServices\\src" + dossier;
+        String globalPath = "C:\\Users\\Feriel\\Documents\\NetBeansProjects\\TbadelTrans\\src" + dossier;
         String fileName = file.getName();
         try {
             Path p = file.toPath();

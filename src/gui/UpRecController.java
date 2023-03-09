@@ -84,7 +84,7 @@ public class UpRecController implements Initializable {
     
              Rcrud pcd = new Rcrud();
          Reclamation r = new Reclamation(resNom, resDesc);
-        System.out.println( pcd.FindReclamationById(resNom));
+//        System.out.println( pcd.FindReclamationById(resNom));
       
         
         System.out.println("Done!!");

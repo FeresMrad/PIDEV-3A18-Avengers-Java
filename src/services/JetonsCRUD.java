@@ -38,14 +38,14 @@ public class JetonsCRUD {
     public List<Jetons> entitiesList() {
     List<Jetons> listJet = new ArrayList<>();
     try {
-        String query = "SELECT jetons.user_id, users.username, jetons.count FROM jetons "
-                + "INNER JOIN users ON jetons.user_id = users.id";
+        String query = "SELECT jetons.user_id, user.email_user, jetons.count FROM jetons "
+                + "INNER JOIN user ON jetons.user_id = user.id_user";
         PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(query);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             Jetons t = new Jetons();
             t.setUser_id(rs.getInt("user_id"));
-            t.setUsername(rs.getString("username"));
+            t.setEmail(rs.getString("email_user"));
             t.setCount(rs.getInt("count"));
             listJet.add(t);
         }

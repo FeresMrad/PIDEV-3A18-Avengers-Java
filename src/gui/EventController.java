@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,10 +38,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import services.EvenementsCRUD;
 import services.ParticipantsCRUD;
 import utils.MyConnection;
+import static gui.ProfilMembreController.idcli;
 
 
 /**
@@ -84,6 +87,8 @@ public class EventController implements Initializable {
     private AnchorPane anchorcom;
     @FXML
     private VBox vboxcom;
+    @FXML
+    private WebView map;
 
     public Label getLabellike2() {
         return labellike2;
@@ -200,7 +205,15 @@ scrollcom.setContent(vboxcom);
   
    public void initialize(URL url, ResourceBundle rb) { 
     Platform.runLater(() -> {
-        
+              map.getEngine().load("https://www.google.com/maps");
+        map.getEngine().getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
+    if (newValue == Worker.State.SUCCEEDED) {
+        String location = llieu.getText();
+        String jsCode = String.format("document.getElementById('searchboxinput').value='%s';"
+                + "document.getElementById('searchbox-searchbutton').click();", location);
+        map.getEngine().executeScript(jsCode);
+    }
+});
     try {
         String requete = "SELECT likee FROM evenements WHERE id=?";
         PreparedStatement ps = MyConnection.getInstance().getCnx().prepareStatement(requete);
@@ -248,7 +261,7 @@ scrollcom.setContent(vboxcom);
 public List<String> showComments(int eventId) {
     List<String> comments = new ArrayList<>();
     try {
-          String requete  = "SELECT r.commentaire, u.nom FROM reactionev r JOIN users u ON r.user_id = u.id WHERE r.evenement_id =?";
+          String requete  = "SELECT r.commentaire, u.nom_user,prenom_user FROM reactionev r JOIN user u ON r.user_id = u.id_user WHERE r.evenement_id =?";
         PreparedStatement ps = MyConnection.getInstance().getCnx().prepareStatement(requete);
      
        
@@ -256,8 +269,9 @@ public List<String> showComments(int eventId) {
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             String comment = rs.getString("commentaire");
-            String userName = rs.getString("nom");
-            String commentString = userName + ": " + comment;
+            String userName = rs.getString("nom_user");
+            String userNamepre = rs.getString("prenom_user");
+            String commentString = userName +" "+userNamepre+ ": " + comment;
             comments.add(commentString);
         }
     } catch (SQLException e) {
@@ -287,30 +301,47 @@ public List<String> showComments(int eventId) {
     }
 
     @FXML
-    private void participier(ActionEvent event) {
-        Evenements e=new Evenements();
-        
+  private void participier(ActionEvent event) {
+    Evenements e = new Evenements(getEvent());
     
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-    alert.setTitle("Confirmation de participation");
-    alert.setHeaderText("Vous voulez participer à cet événement ");
-    alert.setContentText("Êtes-vous sûr de vouloir participier à cet événement ?");
-    
-       Optional<ButtonType> result = alert.showAndWait();
-    if (result.isPresent() && result.get() == ButtonType.OK) {
-
- 
-         ParticipantsCRUD pcd = new ParticipantsCRUD();
-        Participants t = new Participants(getEvent(),5);
-        pcd.addEntityP(t);
-        // Afficher une alerte de succès
-        Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-        successAlert.setTitle("Participation réussie");
-        successAlert.setContentText("Félicitations vous êtes maintenant un participant à l'événement :  "+e.getNom());
-        successAlert.showAndWait();
+    ParticipantsCRUD pcd = new ParticipantsCRUD();
+    List<Participants> participantsList = pcd.getAllParticipantsByEventId(e.getId());
+    boolean isAlreadyParticipant = false;
+    for (Participants p : participantsList) {
+        if (p.getUser_id() == 577) { // Replace 577 with the actual ID of the user
+            isAlreadyParticipant = true;
+            break;
+        }
     }
+    
+    if (isAlreadyParticipant) {
+        // Show an alert indicating that the user is already a participant
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Déjà participant");
+        alert.setHeaderText("Vous êtes déjà un participant à cet événement");
+        alert.setContentText("Vous ne pouvez pas participer deux fois au même événement");
+        alert.showAndWait();
+    } else {
+        // Show a confirmation dialog before adding the user as a participant
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation de participation");
+        alert.setHeaderText("Vous voulez participer à cet événement ");
+        alert.setContentText("Êtes-vous sûr de vouloir participer à cet événement ?");
+    
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Participants t = new Participants(e.getId(), 577); // Replace 577 with the actual ID of the user
+            pcd.addEntityP(t);
+            
+            // Show a success alert after adding the user as a participant
+            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+            successAlert.setTitle("Participation réussie");
+            successAlert.setContentText("Félicitations vous êtes maintenant un participant à cet Evenement");
+            successAlert.showAndWait();
+        }
+    }
+}
 
- }
 
     @FXML
     private void commenter(ActionEvent event) {

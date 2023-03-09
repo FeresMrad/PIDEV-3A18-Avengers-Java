@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import utils.MyConnection;
 
 /**
@@ -23,15 +24,23 @@ import utils.MyConnection;
 public class ServiceService implements ServiceInterface<Service> {
 
     @Override
-    public void ajouterService(Service s) {
-        try {
-            String requete = "insert into services (nom,description) values ('" + s.getIntitule() + "','" + s.getDescription() + "')";
-            Statement st = MyConnection.getInstance().getCnx().createStatement();
-            st.executeUpdate(requete);
-            System.out.println("Service ajouté");
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+    public void ajouterService(Service s,int userId) {
+         try {
+        String requete = "insert into services (nom,description,id_utilisateur) VALUES (?, ?, ?)";
+        PreparedStatement stmt = MyConnection.getInstance().getCnx().prepareStatement(requete);
+        stmt.setString(1, s.getIntitule());
+        stmt.setString(2, s.getDescription());
+        stmt.setInt(3, userId);
+
+        int rowsInserted = stmt.executeUpdate();
+        if (rowsInserted > 0) {
+            JOptionPane.showMessageDialog(null, "Service ajouté !");
         }
+    } catch (SQLException ex) {
+        System.out.println("Erreur lors de l'ajout du service : " + ex.getMessage());
+        ex.printStackTrace();
+    }
+        
     }
 
     @Override

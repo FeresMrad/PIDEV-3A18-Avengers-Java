@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface ServiceInterface<S> {
 
-    public void ajouterService(S s);
+    public void ajouterService(Service s,int userId);
 
     public List<S> etitiesList();
 

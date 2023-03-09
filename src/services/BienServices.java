@@ -7,6 +7,7 @@ package services;
 
 
 import entities.Bien;
+import entities.User;
 import interfaces.BienInterface;
 import java.io.File;
 import java.sql.PreparedStatement;
@@ -21,30 +22,47 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
 import utils.MyConnection;
 public class BienServices implements BienInterface<Bien> {
 
+   
+ 
     @Override
-    public void ajouterBien(Bien b, String pic, String categorie, int categorieId) {
-        try {
-            String requete = "INSERT INTO items (name, description,image,id_categorie) VALUES (?,?, ?, ?)";
-            PreparedStatement stmt = MyConnection.getInstance().getCnx().prepareStatement(requete);
-            stmt.setString(1, b.getNom());
-            stmt.setString(2, b.getDescription());
-            stmt.setString(3, pic);
-            stmt.setInt(4, b.getId_categ());
-            int rowsInserted = stmt.executeUpdate();
-            if (rowsInserted > 0) {
-                JOptionPane.showMessageDialog(null, "Bien ajouté !");
-            }
-        } catch (SQLException ex) {
-            System.out.println("Erreur lors de l'ajout du bien : " + ex.getMessage());
-            ex.printStackTrace();
+public void ajouterBien(Bien b, String pic, String categorie, int categorieId, int userId) {
+    try {
+        String requete = "INSERT INTO items (name, description, image, id_categorie, user_id) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement stmt = MyConnection.getInstance().getCnx().prepareStatement(requete);
+        stmt.setString(1, b.getNom());
+        stmt.setString(2, b.getDescription());
+        stmt.setString(3, pic);
+        stmt.setInt(4, categorieId);
+        stmt.setInt(5, userId);
+
+        int rowsInserted = stmt.executeUpdate();
+        if (rowsInserted > 0) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Ajout de bien");
+            alert.setHeaderText(null);
+            alert.setContentText("Le bien a été ajouté avec succès !");
+            alert.showAndWait();
         }
+    } catch (SQLException ex) {
+        System.out.println("Erreur lors de l'ajout du bien : " + ex.getMessage());
+        ex.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText(null);
+        alert.setContentText("Une erreur est survenue lors de l'ajout du bien. Veuillez réessayer plus tard.");
+        alert.showAndWait();
     }
+}
+
+
+
 
     @Override
     public List<Bien> afficher() {
@@ -59,7 +77,7 @@ public class BienServices implements BienInterface<Bien> {
                 String description = rs.getString("description");
                 String imagePath = rs.getString("image");
                 String categorie = rs.getString("categorie");
-                File file = new File("C:\\Users\\Nouhe\\Documents\\NetBeansProjects\\GestionBiensEtServices\\src\\images\\" + imagePath);
+                File file = new File("C:\\Users\\Feriel\\Documents\\NetBeansProjects\\TbadelTrans\\src\\images\\" + imagePath);
                 Image image = new Image(file.toURI().toString());
                 ImageView imageView = new ImageView(image);
                 imageView.setFitHeight(150);
@@ -73,7 +91,8 @@ public class BienServices implements BienInterface<Bien> {
         return list;
     }
 
-    @Override
+
+@Override
     public void supprimer(int id) throws SQLException {
         String req = "delete from items where id=? ";
         try {
@@ -84,6 +103,22 @@ public class BienServices implements BienInterface<Bien> {
             System.out.println("erreur");
         }
     }
+    
+  /*  @Override
+public void supprimer(int id, int userId) throws SQLException {
+    String req = "delete from items where id=? and user_id=?";
+    try {
+        PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(req);
+        st.setInt(1, id);
+        st.setInt(2, userId);
+        st.executeUpdate();
+    } catch (SQLException ex) {
+        System.out.println("erreur");
+    }
+}*/
+
+    
+
 
     @Override
     public void updateB(Bien b, String pic, int categorieId, int x) {

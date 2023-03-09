@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface BienInterface<B> {
 
-    public void ajouterBien(Bien b, String pic, String categorie, int categorieId);
+    public void ajouterBien(Bien b, String pic, String categorie, int categorieId, int userId);
 
     public List<B> afficher();
 

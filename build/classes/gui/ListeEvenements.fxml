@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="689.0" prefWidth="1004.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListeEvenementsController">
+<AnchorPane id="AnchorPane" prefHeight="800" prefWidth="1200" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListeEvenementsController">
    <children>
       <TableView fx:id="tableevent" layoutX="64.0" layoutY="293.0" prefHeight="336.0" prefWidth="877.0">
         <columns>
@@ -50,3 +50,5 @@
       </Label>
    </children>
 </AnchorPane>
+
+

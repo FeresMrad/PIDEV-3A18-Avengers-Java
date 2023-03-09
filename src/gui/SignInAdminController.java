@@ -5,7 +5,7 @@
  */
 package gui;
 
-import com.esprit.utils.DataSource;
+import utils.MyConnection;
 import java.io.IOException;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -54,7 +54,7 @@ public class SignInAdminController implements Initializable {
     @FXML
     private void action_login_admin(ActionEvent event) {
         String sql = "Select * from user where email_user = ? and mdp_user =? and role='admin'  ";
-        cn = DataSource.getInstance().getCnx();
+        cn = MyConnection.getInstance().getCnx();
         try {
             String newMD = "";
             String mdp = Hash();

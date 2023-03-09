@@ -4,8 +4,8 @@
  */
 package services;
 
+import entities.Bien;
 import entities.Transaction;
-import entities.Transaction.Item;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import utils.MyConnection;
 import interfaces.EntityCRUDT;
+import java.io.File;
+import static java.nio.file.Files.list;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -23,19 +27,19 @@ public class TransactionCRUD implements EntityCRUDT<Transaction> {
     @Override
     public void addEntity(Transaction t) {
         try {
-//            String requete="INSERT INTO transactionv2 (id,from_user_id,to_user_id,from_user_item_id,to_user_item_id,from_user_item,to_user_item,from_user_image,to_user_image,jetons_prop,jetons_dem,commentaire) "
+//            String requete="INSERT INTO transactions (id,from_user_id,to_user_id,from_user_item_id,to_user_item_id,from_user_item,to_user_item,from_user_image,to_user_image,jetons_prop,jetons_dem,commentaire) "
 //                + "VALUES(?,?,?,?,?,?)";
-            String requete="INSERT INTO transactionv2 (jetons_prop,jetons_dem,commentaire,from_user_item,from_user_item_id,from_user_id) "
-                + "VALUES(?,?,?,?,?,?)";
+            String requete="INSERT INTO transactions (jetons_prop,jetons_dem,commentaire,from_user_item,from_user_item_id,from_user_id,to_user_item_id, to_user_item,to_user_id) "
+                + "VALUES(?,?,?,?,?,?,?,?,?)";
         
              PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(requete);
 //             st.setInt(1, t.getId());
              st.setInt(6, t.getFrom_user_id());
-//             st.setInt(3, t.getTo_user_id());
+             st.setInt(9, t.getTo_user_id());
             st.setInt(5, t.getFrom_user_item_id());
-//            st.setInt(5, t.getTo_user_item_id());
+            st.setInt(7, t.getTo_user_item_id());
              st.setString(4, t.getFrom_user_item());
-//             st.setInt(7, t.getTo_user_item());
+             st.setString(8, t.getTo_user_item());
 //             st.setInt(8, t.getFrom_user_image());
 //             st.setInt(9, t.getTo_user_image());
              st.setInt(1, t.getJetons_prop());
@@ -52,7 +56,7 @@ public class TransactionCRUD implements EntityCRUDT<Transaction> {
 public List<Transaction> entitiesList() {
     List<Transaction> transactions = new ArrayList<>();
     try {
-        String query = "SELECT * FROM transactionv2 ";
+        String query = "SELECT * FROM transactions ";
         PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(query);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -69,6 +73,7 @@ public List<Transaction> entitiesList() {
             t.setJetons_prop(rs.getInt("jetons_prop"));
             t.setJetons_dem(rs.getInt("jetons_dem"));
             t.setCommentaire(rs.getString("commentaire"));
+            t.setEtat(rs.getString("etat"));
             transactions.add(t);
         }
     } catch (SQLException ex) {
@@ -82,7 +87,7 @@ public List<Transaction> entitiesList() {
 public void delEntity(int id) {
     try {
         // create the delete query
-        String query = "DELETE FROM transactionv2 WHERE id=?";
+        String query = "DELETE FROM transactions WHERE id=?";
 
         // create the prepared statement with the query
         PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(query);
@@ -110,7 +115,7 @@ public void delEntity(int id) {
        
 
         // create the update query
-        String query = "UPDATE transactionv2 SET  jetons_prop=?, jetons_dem=?, commentaire=? WHERE id=?";
+        String query = "UPDATE transactions SET  jetons_prop=?, jetons_dem=?, commentaire=?, etat=? WHERE id=?";
 
         // create the prepared statement with the query
         PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(query);
@@ -120,7 +125,8 @@ public void delEntity(int id) {
         st.setInt(1, t.getJetons_prop());
         st.setInt(2, t.getJetons_prop());
         st.setString(3, t.getCommentaire());
-        st.setInt(4, t.getId());
+        st.setString(4,t.getEtat());
+        st.setInt(5, t.getId());
 
         // execute the update query
         int rowsUpdated = st.executeUpdate();
@@ -147,7 +153,7 @@ public void delEntity(int id) {
 //}
 //     public String getUserItemById(int from_user_id) {
 //    try {
-//        String query = "SELECT name FROM items i JOIN transactionv2 t ON i.id = t.from_user_item_id WHERE t.id = ?";
+//        String query = "SELECT name FROM items i JOIN transactions t ON i.id = t.from_user_item_id WHERE t.id = ?";
 //        PreparedStatement st = new MyConnection().getCnx().prepareStatement(query);
 //        st.setInt(1, from_user_id);
 //        ResultSet rs = st.executeQuery();
@@ -186,12 +192,12 @@ public void delEntity(int id) {
          public String getFromUsernameById (int from_user_id) {
              String FromUsername= null;
              try{
-                String query = "SELECT username from users where id=?";
+                String query = "SELECT nom_user from user where id_user=?";
                 PreparedStatement st = new MyConnection().getCnx().prepareStatement(query);
                 st.setInt(1, from_user_id);
                 ResultSet resultSet = st.executeQuery();
                 if (resultSet.next()) {
-                    FromUsername = resultSet.getString("username");
+                    FromUsername = resultSet.getString("nom_user");
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
@@ -201,12 +207,12 @@ public void delEntity(int id) {
              public String getToUsernameById (int to_user_id) {
              String ToUsername= null;
              try{
-                String query = "SELECT username from users where id=?";
+                String query = "SELECT nom_user from user where id_user=?";
                 PreparedStatement st = new MyConnection().getCnx().prepareStatement(query);
                 st.setInt(1, to_user_id);
                 ResultSet resultSet = st.executeQuery();
                 if (resultSet.next()) {
-                    ToUsername = resultSet.getString("username");
+                    ToUsername = resultSet.getString("nom_user");
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
@@ -228,26 +234,116 @@ public void delEntity(int id) {
         }
         return itemId;
     }
+
+    public int getUserIdByItemId(int id) {
+        int userId = -1;
+        try {
+            String query = "SELECT user_id FROM items WHERE id=?";
+            PreparedStatement st = new MyConnection().getCnx().prepareStatement(query);
+            st.setInt(1, id);
+            ResultSet resultSet = st.executeQuery();
+            if (resultSet.next()) {
+                userId = resultSet.getInt("user_id");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return userId;
+    }
     
-    public int getCountJetons(int from_user_id){
-        int countJetons = 0;
+        public int getToUserIdByTransId(int id) {
+        int userId = -1;
+        try {
+            String query = "SELECT to_user_id FROM transactions WHERE id=?";
+            PreparedStatement st = new MyConnection().getCnx().prepareStatement(query);
+            st.setInt(1, id);
+            ResultSet resultSet = st.executeQuery();
+            if (resultSet.next()) {
+                userId = resultSet.getInt("to_user_id");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return userId;
+    }
+    
+        public String getNameByItemId(int id) {
+        String ToItemName = null;
+        try {
+            String query = "SELECT name FROM items WHERE id=?";
+            PreparedStatement st = new MyConnection().getCnx().prepareStatement(query);
+            st.setInt(1, id);
+            ResultSet resultSet = st.executeQuery();
+            if (resultSet.next()) {
+                ToItemName = resultSet.getString("name");
+                System.out.println("s"+ToItemName);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return ToItemName;
+    }
+        
+        public String getImageByItemId(int id) {
+        String ImageString = null;
+        try {
+            String query = "SELECT image FROM items WHERE id=?";
+            PreparedStatement st = new MyConnection().getCnx().prepareStatement(query);
+            st.setInt(1, id);
+            ResultSet resultSet = st.executeQuery();
+            if (resultSet.next()) {
+                ImageString = resultSet.getString("image");
+                System.out.println("s"+ImageString);
+                String imagePath = resultSet.getString("image");
+                File file = new File("C:\\Users\\feres\\OneDrive\\Desktop\\PI EN COURS D'INTEG\\TbadelTrans\\src\\images" + imagePath);
+                Image image = new Image (file.toURI().toString());
+                ImageView imageView = new ImageView(image);
+                Bien bien = new Bien(imageView);
+                //list.add(bien);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return ImageString;
+    }
+    
+    public int getCountJetonsFrom(int from_user_id){
+        int countJetonsFrom = 0;
         try {
             
-            String query = " SELECT j.count FROM jetons j JOIN users u ON j.user_id=u.id JOIN transactionv2 t ON u.id=t.from_user_id where t.from_user_id=? ";
+            String query = " SELECT j.count FROM jetons j JOIN user u ON j.user_id=u.id_user JOIN transactions t ON u.id_user=t.from_user_id where t.from_user_id=? ";
             PreparedStatement st = new MyConnection().getCnx().prepareStatement(query);
             st.setInt(1, from_user_id );
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                countJetons = rs.getInt("count");
+                countJetonsFrom = rs.getInt("count");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return countJetons;
+        return countJetonsFrom;
             
         }
     
-    public void updCountJetons(int user_id, int newCount) {
+        public int getCountJetonsTo(int to_user_id){
+        int countJetonsTo = 0;
+        try {
+            
+            String query = " SELECT j.count FROM jetons j JOIN user u ON j.user_id=u.id_user JOIN transactions t ON u.id_user=t.to_user_id where t.to_user_id=? ";
+            PreparedStatement st = new MyConnection().getCnx().prepareStatement(query);
+            st.setInt(1, to_user_id );
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                countJetonsTo = rs.getInt("count");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return countJetonsTo;
+            
+        }
+    
+    public void updCountJetonsProp(int user_id, int newCount) {
     try {
         String query = "UPDATE jetons SET count = ? WHERE user_id = ?";
         PreparedStatement st = new MyConnection().getCnx().prepareStatement(query);
@@ -257,13 +353,14 @@ public void delEntity(int id) {
     } catch (SQLException e) {
         e.printStackTrace();
     }
-}
+    }
+
 
     
      
 //     public List<Item> getUserItemsById(int from_user_id) {
 //    try {
-//        String query = "SELECT i.id, i.name FROM items i JOIN transactionv2 t ON i.id = t.from_user_item_id WHERE t.id = ?";
+//        String query = "SELECT i.id, i.name FROM items i JOIN transactions t ON i.id = t.from_user_item_id WHERE t.id = ?";
 //        PreparedStatement st = new MyConnection().getCnx().prepareStatement(query);
 //        st.setInt(1, from_user_id);
 //        ResultSet rs = st.executeQuery();

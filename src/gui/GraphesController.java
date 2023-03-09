@@ -15,8 +15,15 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -39,6 +46,9 @@ public class GraphesController implements Initializable {
     private AnchorPane panePieChart;
     @FXML
     private AnchorPane paneBarChart;
+
+    @FXML
+    private Button idacc;
 
     /**
      * Initializes the controller class.
@@ -104,6 +114,14 @@ public class GraphesController implements Initializable {
         AnchorPane.setBottomAnchor(swingNode, 0.0);
         AnchorPane.setLeftAnchor(swingNode, 0.0);
         AnchorPane.setRightAnchor(swingNode, 0.0);
+    }
+@FXML
+    void redacc(MouseEvent event) throws IOException {
+        Parent page2 = FXMLLoader.load(getClass().getResource("InterfaceMembre.fxml"));
+        Scene scene2 = new Scene(page2);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.setScene(scene2);
+        app_stage.show();
     }
 
 }

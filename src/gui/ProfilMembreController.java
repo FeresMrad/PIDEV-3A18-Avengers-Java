@@ -7,7 +7,7 @@ package gui;
 
 import entities.User;
 import services.ServiceUser;
-import com.esprit.utils.DataSource;
+import utils.MyConnection;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,7 +38,6 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
-
  
 /**
  * FXML Controller class
@@ -172,7 +171,7 @@ public class ProfilMembreController implements Initializable {
     }
     public void Select(){
         
-         mc = DataSource.getInstance().getCnx();
+         mc = MyConnection.getInstance().getCnx();
         String sql="SELECT * FROM user where id_user = "+idcli+" " ;
 
         try{

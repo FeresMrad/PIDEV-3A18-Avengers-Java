@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SignInMembreController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SignInMembreController">
    <children>
-      <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #9EBFAD;">
+      <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #CCF5F1;">
          <children>
-            <AnchorPane layoutX="486.0" prefHeight="600.0" prefWidth="514.0" style="-fx-background-color: #4F996D;">
+            <AnchorPane layoutX="486.0" prefHeight="600.0" prefWidth="514.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);">
                <children>
                   <Button fx:id="login_membre_btn" layoutX="190.0" layoutY="410.0" mnemonicParsing="false" onAction="#action_login_membre" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #143F51;" text="LOGIN" textFill="WHITE">
                      <effect>
@@ -46,7 +46,7 @@
                   <PasswordField fx:id="mdp_membre" alignment="CENTER" layoutX="150.0" layoutY="351.0" prefHeight="25.0" prefWidth="230.0" />
                   <TextField fx:id="email_membre" alignment="CENTER" layoutX="150.0" layoutY="250.0" prefHeight="25.0" prefWidth="230.0" />
                   <Label layoutX="157.0" layoutY="364.0" onMouseClicked="#passReset" />
-                  <Hyperlink layoutX="252.0" layoutY="460.0" onAction="#action_forgot_pass" prefHeight="24.0" prefWidth="170.0" text="Forgot your password ?" textFill="#000001">
+                  <Hyperlink layoutX="180.0" layoutY="483.0" onAction="#action_forgot_pass" prefHeight="24.0" prefWidth="170.0" text="Forgot your password ?" textFill="#14b1a1">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font></Hyperlink>

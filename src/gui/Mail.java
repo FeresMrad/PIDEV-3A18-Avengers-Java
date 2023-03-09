@@ -51,11 +51,11 @@ public class Mail {
         message.setFrom(new InternetAddress(username));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
         message.setSubject(subject);
-        message.setText(body);
+        message.setText(body);}
 
         // Send the message
         
-Transport.send(message, "fatenbouzaffara@gmail.com", "Meyssouna21");    }
+//Transport.send(message, "fatenbouzaffara@gmail.com", "Meyssouna21");    }
 
     public static void main(String[] args) {
         try {

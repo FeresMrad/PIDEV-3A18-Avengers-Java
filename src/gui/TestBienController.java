@@ -6,6 +6,10 @@
 package gui;
 
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,14 +40,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import entities.Bien;
+import static gui.ProfilMembreController.idcli;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -51,9 +62,11 @@ import javafx.scene.control.TableCell;
 import javafx.util.Callback;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import services.BienServices;
+import services.TransactionCRUD;
 import upload.Upload;
 import utils.MyConnection;
 
@@ -92,6 +105,8 @@ public class TestBienController implements Initializable {
     private TableColumn<Bien, String> idlibelle;
     @FXML
     private TableColumn<Bien, String> idetat;
+        @FXML
+    private Button reserverbtn;
     @FXML
     private TableColumn<Bien, String> idcatt;
     private File file;
@@ -129,6 +144,9 @@ public class TestBienController implements Initializable {
     public ObservableList<Bien> data = FXCollections.observableArrayList();
     @FXML
     private ListView<Bien> recommendedItemsListView;
+
+    @FXML
+    private Button idsss;
 
     /**
      * Initializes the controller class.
@@ -247,47 +265,11 @@ public List<Bien> getRecommendedItems(int userId) {
     }
     return recommendedItems;
 }
-
-
-
-
-
-
-
 private ListChangeListener<Bien> favorisListener;
-
-
   @Override
     public void initialize(URL url, ResourceBundle rb) {
         showBien();
-        Button addToFavoritesButton = new Button("Ajouter aux favoris");
-        addToFavoritesButton.setOnAction(event -> {
-            // Récupérer l'ID de l'élément sélectionné par l'utilisateur
-            int itemId = tablebiens.getSelectionModel().getSelectedItem().getId();
-
-            // Utiliser un ID statique pour l'utilisateur en attendant l'implémentation du système d'authentification
-            int userId = 2;
-
-            // Insérer l'ID de l'élément et l'ID de l'utilisateur dans la table "favoris" de votre base de données
-            try {
-                String requete = "INSERT INTO favoris (id_item, id_utilisateur) VALUES (?, ?)";
-                PreparedStatement stmt = MyConnection.getInstance().getCnx().prepareStatement(requete);
-                stmt.setInt(1, itemId);
-                stmt.setInt(2, userId);
-                stmt.executeUpdate();
-                System.out.println("L'élément a été ajouté aux favoris.");
-            } catch (SQLException ex) {
-                System.err.println("Une erreur s'est produite lors de l'ajout de l'élément aux favoris : " + ex.getMessage());
-            }
-        });
-
-  
-
-
-// Configurer la colonne pour afficher les images
-   
- 
-        TableColumn<Bien, Void> favorisCol = new TableColumn<>("Favoris");
+       TableColumn<Bien, Void> favorisCol = new TableColumn<>("Favoris");
         Callback<TableColumn<Bien, Void>, TableCell<Bien, Void>> cellFactory = new Callback<TableColumn<Bien, Void>, TableCell<Bien, Void>>() {
             @Override
             public TableCell<Bien, Void> call(final TableColumn<Bien, Void> param) {
@@ -297,22 +279,27 @@ private ListChangeListener<Bien> favorisListener;
 
                     {
                         favorisButton.setOnAction((ActionEvent event) -> {
-                            // Récupérer le Bien associé à la ligne sélectionnée
+                        
                             Bien bien = getTableView().getItems().get(getIndex());
 
-                            // Récupérer l'ID du Bien associé à la ligne sélectionnée
+                          
                             int itemId = bien.getId();
 
-                            // Utiliser un ID statique pour l'utilisateur en attendant l'implémentation du système d'authentification
-                            int userId = 2;
+                          
+                              int userId=idcli;
 
-                            // Insérer l'ID de l'élément et l'ID de l'utilisateur dans la table "favoris" de votre base de données
+                            
                             try {
                                 String requete = "INSERT INTO favoris (id_item, id_utilisateur) VALUES (?, ?)";
                                 PreparedStatement stmt = MyConnection.getInstance().getCnx().prepareStatement(requete);
                                 stmt.setInt(1, itemId);
                                 stmt.setInt(2, userId);
                                 stmt.executeUpdate();
+                                   Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Succès");
+                        alert.setHeaderText(null);
+                        alert.setContentText("L'élément a été ajouté aux favoris avec succès !");
+                        alert.showAndWait();
                                 System.out.println("L'élément a été ajouté aux favoris.");
                             } catch (SQLException ex) {
                                 System.err.println("Une erreur s'est produite lors de l'ajout de l'élément aux favoris : " + ex.getMessage());
@@ -340,22 +327,20 @@ private ListChangeListener<Bien> favorisListener;
         ObservableList<Bien> data = FXCollections.observableArrayList(s.afficher());
         tablebiens.setItems(data);
         favorisList = new ArrayList<Bien>();
-
-      int loggedInUserId = 2;
+        //rec
+        
+        
+        int loggedInUserId =idcli;
       List<Bien> favorisList = getFavorites(loggedInUserId);
       Map<Integer, Integer> categoryCounts = countCategoryOccurrences(favorisList);
       int mostFrequentCategory = findMostFrequentCategory(categoryCounts);
-//List<Bien> recommendedItems = getRecommendedItems(mostFrequentCategory, loggedInUserId);
+
       List<Bien> recommendedItems = getRecommendedItems(loggedInUserId);
 
 
-// Retirer les biens déjà présents dans la liste des favoris de l'utilisateur connecté
       recommendedItems.removeIf(favorisList::contains);
 
-// Ajouter les biens recommandés à la liste d'affichage
       recommendedItemsListView.getItems().addAll(recommendedItems);
-
-// Créer un écouteur sur la liste de favoris de l'utilisateur
       recommendedItemsListView.setCellFactory(new Callback<ListView<Bien>, ListCell<Bien>>() {
           @Override
           public ListCell<Bien> call(ListView<Bien> param) {
@@ -399,7 +384,72 @@ recommendedItemsListView.setOnMouseClicked(event -> {
         }
     }
 });
+
+
+
+qrCodeColumn.setCellValueFactory(new Callback<CellDataFeatures<Bien, Image>, ObservableValue<Image>>() {
+            @Override
+            public ObservableValue<Image> call(CellDataFeatures<Bien, Image> param) {
+                try {
+                    String nom = param.getValue().getNom();
+                    String description = param.getValue().getDescription();
+                    String categorie = param.getValue().getCategorie();
+                    String contenu = "Libellé: "+nom + "\n"+"Catégorie: "+ categorie+"\n"+ "Description :" + description;
+                    QRCodeWriter qrCodeWriter = new QRCodeWriter();
+                    BitMatrix bitMatrix = qrCodeWriter.encode(contenu, BarcodeFormat.QR_CODE, 900, 900);
+                    BufferedImage qrCodeImage = MatrixToImageWriter.toBufferedImage(bitMatrix);
+                    Image image = SwingFXUtils.toFXImage(qrCodeImage, null);
+                    return new SimpleObjectProperty<>(image);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        });
+     qrCodeColumn.setCellFactory(new Callback<TableColumn<Bien, Image>, TableCell<Bien, Image>>() {
+            @Override
+            public TableCell<Bien, Image> call(TableColumn<Bien, Image> param) {
+                return new TableCell<Bien, Image>() {
+                    private final ImageView imageView = new ImageView();
+
+                    {
+                        imageView.setPreserveRatio(true);
+                        imageView.setFitHeight(100);
+                        imageView.setFitWidth(100);
+                        setGraphic(imageView);
+                    }
+
+                    @Override
+                    protected void updateItem(Image item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item != null && !empty) {
+                            imageView.setImage(item);
+                        } else {
+                            imageView.setImage(null);
+                        }
+                    }
+                };
+            }
+        });
+
     }
+
+    
+    
+@FXML
+    void stat(ActionEvent event) throws IOException {
+        Parent page2 = FXMLLoader.load(getClass().getResource("Graphes.fxml"));
+        Scene scene2 = new Scene(page2);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.setScene(scene2);
+        app_stage.show();
+    }
+ 
+
+
+
+
+
     @FXML
     private void importerimage() throws IOException {
 
@@ -462,51 +512,83 @@ recommendedItemsListView.setOnMouseClicked(event -> {
 
         return selectedItem;
     }
-
     @FXML
-    private void modifierbien() throws FileNotFoundException, SQLException {
-        int x = SelectionnerBien();
-        String sql = "SELECT id, name, description, image, categorie FROM items, categories WHERE items.id_categorie = categories.idC";
-        Statement st = MyConnection.getInstance().getCnx().createStatement();
-        ResultSet rs = st.executeQuery(sql);
-        while (rs.next()) {
-            int a = rs.getInt("id");
-            String b = rs.getString("name");
-            String c = rs.getString("description");
-            String f = rs.getString("image");
-            String h = rs.getString("categorie");
-            if (x == a) {
-                idlib.setText(b);
-                iddesc.setText(c);
-                txtImage.setText(f);
-                idcategor.setValue(h);
+private void modifierbien() throws FileNotFoundException, SQLException {
+    int x = SelectionnerBien();
+    int userId=idcli;
+    String sql = "SELECT id, name, description, image, categorie, user_id FROM items, categories WHERE items.id_categorie = categories.idC";
+    Statement st = MyConnection.getInstance().getCnx().createStatement();
+    ResultSet rs = st.executeQuery(sql);
+    while (rs.next()) {
+        int a = rs.getInt("id");
+        String b = rs.getString("name");
+        String c = rs.getString("description");
+        String f = rs.getString("image");
+        String h = rs.getString("categorie");
+        int bienUserId = rs.getInt("user_id");
+        if (x == a) {
+            if (bienUserId != userId) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Accès refusé");
+                alert.setContentText("Vous n'êtes pas autorisé à modifier ce bien.");
+                alert.showAndWait();
+                return;
             }
+            idlib.setText(b);
+            iddesc.setText(c);
+            txtImage.setText(f);
+            idcategor.setValue(h);
         }
     }
+}
+@FXML
+private void supprimerbien(ActionEvent event) throws SQLException {
+    int x = SelectionnerBien();
+    int userId=idcli;
+    if (tablebiens.getSelectionModel().getSelectedItems().isEmpty()) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Aucune ligne sélectionnée");
+        alert.setContentText("Veuillez sélectionner le bien à supprimer.");
+        alert.showAndWait();
+        return;
+    }
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setTitle("Supprimer bien");
+    alert.setHeaderText(null);
+    alert.setContentText("Êtes-vous sûr de vouloir supprimer ce bien ?");
+    Optional<ButtonType> result = alert.showAndWait();
+    if (result.get() == ButtonType.OK) {
+        // Récupérer le bien sélectionné
+        Bien selectedBien = tablebiens.getSelectionModel().getSelectedItem();
 
-    @FXML
-    private void supprimerbien(ActionEvent event) throws SQLException {
-        int x = SelectionnerBien();
-        if (tablebiens.getSelectionModel().getSelectedItems().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Aucune ligne sélectionnée");
-            alert.setContentText("Veuillez sélectionner le bien à supprimer.");
-            alert.showAndWait();
+        String sql = "SELECT user_id FROM items WHERE id=?";
+        PreparedStatement pstmt = MyConnection.getInstance().getCnx().prepareStatement(sql);
+        pstmt.setInt(1, selectedBien.getId());
+        ResultSet rs = pstmt.executeQuery();
+        int bienUserId = -1;
+        if (rs.next()) {
+            bienUserId = rs.getInt("user_id");
+        }
+   
+        if (userId != bienUserId) {
+            Alert alert2 = new Alert(Alert.AlertType.ERROR);
+            alert2.setTitle("Erreur");
+            alert2.setHeaderText(null);
+            alert2.setContentText("Vous n'êtes pas autorisé à supprimer ce bien.");
+            alert2.showAndWait();
             return;
         }
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Supprimer bien");
-        alert.setHeaderText(null);
-        alert.setContentText("Êtes-vous sûr de vouloir supprimer ce bien ?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            ser.supprimer(x);
-            tablebiens.getItems().clear();
-            showBien();
-        }
+        
+        ser.supprimer(x);
+        tablebiens.getItems().clear();
+        showBien();
     }
+}
 
-    @FXML
+
+
+
+ @FXML
     private void vmm() throws SQLException, FileNotFoundException {
         int x = SelectionnerBien();
         Bien b = new Bien();
@@ -562,56 +644,60 @@ recommendedItemsListView.setOnMouseClicked(event -> {
         }
 
     }
+   
 
-    @FXML
-    private void ajouterbien() throws SQLException, FileNotFoundException {
-        //fis = new FileInputStream(file);
-        //ObservableList<String> catgs = FXCollections.observableArrayList();
-        if (idlib.getText().isEmpty() || iddesc.getText().isEmpty() || idcategor.getSelectionModel().getSelectedItem().toString().isEmpty() || txtImage.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Erreur");
-            alert.setHeaderText(null);
-            alert.setContentText("Veuillez remplir tous les champs");
-            alert.showAndWait();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Ajouter un bien");
-            alert.setHeaderText(null);
-            alert.setContentText("Êtes-vous sûr de vouloir ajouter ce bien ?");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                String libelle = idlib.getText();
-                String description = iddesc.getText();
-                String categorie = idcategor.getSelectionModel().getSelectedItem().toString();
-                int categorieId = 0;
-                try {
-                    Statement stmt = MyConnection.getInstance().getCnx().createStatement();
-                    ResultSet rs = stmt.executeQuery("SELECT idC FROM categories WHERE categorie = '" + categorie + "'");
+@FXML
+private void ajouterbien() throws SQLException, FileNotFoundException {
+     
+    if (idlib.getText().isEmpty() || iddesc.getText().isEmpty() || idcategor.getSelectionModel().getSelectedItem().toString().isEmpty() || txtImage.getText().isEmpty()) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Erreur");
+        alert.setHeaderText(null);
+        alert.setContentText("Veuillez remplir tous les champs");
+        alert.showAndWait();
+    } else {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Ajouter un bien");
+        alert.setHeaderText(null);
+        alert.setContentText("Êtes-vous sûr de vouloir ajouter ce bien ?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            String libelle = idlib.getText();
+            String description = iddesc.getText();
+            String categorie = idcategor.getSelectionModel().getSelectedItem().toString();
+            int categorieId = 0;
+            try {
+                Statement stmt = MyConnection.getInstance().getCnx().createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT idC FROM categories WHERE categorie = '" + categorie + "'");
 
-                    if (rs.next()) {
-                        categorieId = rs.getInt("idC");
-                    } else {
-                        System.out.println("La catégorie sélectionnée n'a pas été trouvée");
-                        return;
-                    }
-
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
+                if (rs.next()) {
+                    categorieId = rs.getInt("idC");
+                } else {
+                    System.out.println("La catégorie sélectionnée n'a pas été trouvée");
                     return;
                 }
-                BienServices pcd = new BienServices();
-                Bien b = new Bien(libelle, description, pic, categorieId);
-                pcd.ajouterBien(b, pic, categorie, categorieId);
-                System.out.println("Done");
-                tablebiens.getItems().clear();
-                showBien();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                return;
             }
+            
+            int userId=idcli;
+            BienServices bienServices = new BienServices();
+
+            Bien bien = new Bien(libelle, description, pic, categorieId);
+            bienServices.ajouterBien(bien, pic, categorie, categorieId, userId);
+            System.out.println("Done");
+            tablebiens.getItems().clear();
+            showBien();
         }
     }
+}
+
 
     @FXML
     void acceuil(ActionEvent event) throws IOException {
-        Parent page2 = FXMLLoader.load(getClass().getResource("Accueil.fxml"));
+        Parent page2 = FXMLLoader.load(getClass().getResource("InterfaceMembre.fxml"));
         Scene scene2 = new Scene(page2);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(scene2);
@@ -635,7 +721,6 @@ recommendedItemsListView.setOnMouseClicked(event -> {
     private void reinitialiserFiltre(MouseEvent event) {
         idfiltre.getSelectionModel().clearSelection();
 
-        // Afficher toutes les données dans la TableView
         showBien();
 
     }
@@ -649,13 +734,40 @@ recommendedItemsListView.setOnMouseClicked(event -> {
         app_stage.show();
     }
 
-    @FXML
-    void graphes(ActionEvent event) throws IOException {
-        Parent page2 = FXMLLoader.load(getClass().getResource("Graphes.fxml"));
+  
+  @FXML
+    void interface1 (ActionEvent event) throws IOException {
+        Parent page2 = FXMLLoader.load(getClass().getResource("InterfaceMembre.fxml"));
         Scene scene2 = new Scene(page2);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(scene2);
         app_stage.show();
     }
-
+    
+    public void reserverItem(ActionEvent event) throws SQLException {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("StartTransaction.fxml"));
+    try {
+        Parent root = loader.load();
+        TransactionCRUD pp = new TransactionCRUD();
+        // Get the selected item's ID
+        int selectedItem = tablebiens.getSelectionModel().getSelectedItem().getId();
+        System.out.println("testing" + selectedItem);
+                StartTransactionController dc = loader.getController();
+//        String requete="SELECT id FROM items WHERE id=selectedItem";
+//        PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(requete);
+//        ResultSet rs = st.executeQuery();
+//        int x = -1;
+//        if (rs.next()){
+//            x = rs.getInt("id");
+//        }
+        // Set the selected item's ID in the StartTransactionController
+        dc.setTest(selectedItem);
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    } catch (IOException ex) {
+        Logger.getLogger(StartTransactionController.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
 }

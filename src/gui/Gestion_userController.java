@@ -5,10 +5,12 @@
  */
 package gui;
 
-import com.itextpdf.text.DocumentException;
 import entities.Logisticien;
+import entities.Client;
 import entities.User;
 import services.ServiceUser;
+import test.FXMainAdmin;
+import com.itextpdf.text.DocumentException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -33,7 +35,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javax.swing.JOptionPane;
-import test.FXMainAdmin;
 
 /**
  *
@@ -177,7 +178,8 @@ public  void showUser(){
         
     }
 
-    public void recherche(ActionEvent event){
+
+     public void recherche(ActionEvent event){
     ServiceUser sp = new ServiceUser();
     
     ObservableList<User>list = sp.getUser(recherche_user.getText());
@@ -186,7 +188,8 @@ public  void showUser(){
     cl_prenom_user1.setCellValueFactory(new PropertyValueFactory<>("prenom_user"));
     cl_tel_user1.setCellValueFactory(new PropertyValueFactory<>("tel_user"));
     cl_email_user1.setCellValueFactory(new PropertyValueFactory<>("email_user"));
-     cl_role_user1.setCellValueFactory(new PropertyValueFactory<>("role"));
+    //cl_mdp_user1.setCellValueFactory(new PropertyValueFactory<>("mdp_user"));
+    
     table1.setItems(list);
     }
     

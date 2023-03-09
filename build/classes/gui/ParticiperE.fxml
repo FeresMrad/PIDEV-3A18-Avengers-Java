@@ -4,33 +4,34 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="605.0" prefWidth="1031.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ParticiperEController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="900" style="-fx-background-color: #CCF5F1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ParticiperEController">
    <children>
-      <Button fx:id="btnparticipier" layoutX="516.0" layoutY="143.0" mnemonicParsing="false" onAction="#participier" prefHeight="31.0" prefWidth="136.0" text="Participer" />
-      <TableView fx:id="tableevent" layoutX="51.0" layoutY="216.0" prefHeight="342.0" prefWidth="927.0" style="-fx-background-color: #CCF5F1;">
+      <TableView fx:id="tableevent" layoutX="233.0" layoutY="214.0" prefHeight="342.0" prefWidth="927.0">
         <columns>
           <TableColumn fx:id="tnom" prefWidth="167.0" text="Nom" />
           <TableColumn fx:id="tdesc" prefWidth="321.0" text="Description" />
             <TableColumn fx:id="tdatedeb" prefWidth="150.0" text="Date debut" />
             <TableColumn fx:id="tdatefin" prefWidth="136.0" text="Date fin" />
             <TableColumn fx:id="tlieu" prefWidth="152.0" text="Lieu" />
-        </columns>
+</columns>
       </TableView>
-      <Label layoutX="306.0" layoutY="27.0" text="Participer à un événement">
-         <font>
-            <Font name="System Bold" size="34.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="183.0" fitWidth="216.0" layoutY="-40.0">
-         <image>
-            <Image url="@tbadellogo.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="consult" layoutX="306.0" layoutY="143.0" mnemonicParsing="false" onAction="#consulter" prefHeight="31.0" prefWidth="128.0" text="Consulter" />
+      <Button fx:id="consult" layoutX="600.0" layoutY="623.0" mnemonicParsing="false" onAction="#consulter" prefHeight="31.0" prefWidth="128.0" text="Consulter" />
+      <AnchorPane fx:id="anchorleft" layoutX="-8.0" layoutY="146.0" prefHeight="652.0" prefWidth="206.0" style="-fx-background-color: linear-gradient(to bottom, #14B1A1, #CCF5F1);" />
+      <AnchorPane prefHeight="87.0" prefWidth="1200.0" style="-fx-background-color: #14B1A1;">
+         <children>
+            <Label layoutX="376.0" layoutY="19.0" text="Participer à un événement">
+               <font>
+                  <Font name="System Bold" size="34.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+          
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

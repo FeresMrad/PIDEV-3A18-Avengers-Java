@@ -5,20 +5,24 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListeTransactionController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="846.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListeTransactionController">
    <children>
-      <TableView fx:id="tablelt" layoutX="12.0" layoutY="22.0" prefHeight="200.0" prefWidth="576.0">
+      <TableView fx:id="tablelt" layoutX="24.0" layoutY="23.0" onMouseClicked="#handleMouseAction" prefHeight="200.0" prefWidth="799.0">
         <columns>
           <TableColumn fx:id="idlt" prefWidth="31.0" text="ID" />
           <TableColumn fx:id="from_userlt" prefWidth="83.0" text="From" />
             <TableColumn fx:id="to_userlt" prefWidth="67.0" text="To" />
-            <TableColumn fx:id="from_user_itemlt" prefWidth="96.0" text="From_item" />
-            <TableColumn fx:id="to_user_itemlt" prefWidth="98.0" text="To_item" />
-            <TableColumn fx:id="jetons_proplt" prefWidth="65.0" text="Jetons_from" />
-            <TableColumn fx:id="jetons_demlt" minWidth="0.0" prefWidth="65.0" text="Jetons_to" />
-            <TableColumn fx:id="etatlt" prefWidth="69.0" text="Etat" />
+            <TableColumn fx:id="from_user_itemlt" prefWidth="111.0" text="From_item" />
+            <TableColumn fx:id="to_user_itemlt" prefWidth="107.0" text="To_item" />
+            <TableColumn fx:id="jetons_proplt" prefWidth="95.0" text="Jetons_from" />
+            <TableColumn fx:id="jetons_demlt" minWidth="0.0" prefWidth="66.0" text="Jetons_to" />
+            <TableColumn fx:id="etatlt" prefWidth="60.0" text="Etat" />
+            <TableColumn fx:id="commentairelt" prefWidth="178.0" text="Commentaire" />
         </columns>
       </TableView>
-      <Button fx:id="feedbacklt" layoutX="59.0" layoutY="361.0" mnemonicParsing="false" onAction="#giveFeedback" text="Feedback" />
+      <Button fx:id="feedbacklt" layoutX="24.0" layoutY="361.0" mnemonicParsing="false" onAction="#giveFeedback" text="Feedback" />
+      <Button fx:id="chatlt" layoutX="24.0" layoutY="324.0" mnemonicParsing="false" onAction="#openChat" prefHeight="25.0" prefWidth="59.0" text="Chat" />
+      <Button fx:id="validerlt" layoutX="771.0" layoutY="361.0" mnemonicParsing="false" onAction="#validerTransaction" text="Valider" />
+      <Button fx:id="annulerlt" layoutX="771.0" layoutY="324.0" mnemonicParsing="false" onAction="#annulerTransaction" text="Annuler" />
    </children>
 </AnchorPane>

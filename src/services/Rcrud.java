@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -33,11 +34,11 @@ public class Rcrud implements EntityCRUD<Reclamation> {
             while(rs.next()){
                 Reclamation r = new Reclamation();
                 r.setId(rs.getInt("id"));
-                r.setUser_id(rs.getInt("user_id"));
+               // r.setUser_id(rs.getInt("user_id"));
                 r.setSubject(rs.getString("subject"));
                 r.setMessage(rs.getString("message"));
                  r.setStatus(rs.getString("status"));
-                //r.setDate( new java.sql.Date(r.getCreated_at().getTime()));
+                 r.setDate(rs.getDate("created_at"));                  
                 entitiesList.add(r);
             }
         } catch (SQLException ex) {
@@ -46,22 +47,30 @@ public class Rcrud implements EntityCRUD<Reclamation> {
             return entitiesList;
         
     }
-    @Override
-    public void ajouterReclamation(Reclamation t) {
+    //badalt
+   @Override
+       public void ajouterReclamation(Reclamation t,String email) {
     try {
-        String requete = "INSERT INTO reclamations (user_id, subject, message, status) VALUES (?, ?, ?, ?)";
+        Rcrud rec=new Rcrud();
+        String requete = "INSERT INTO reclamations (user_id, subject, message, status, email) VALUES (?, ?, ?, ?,?)";
         PreparedStatement ps = MyConnection.getInstance().getCnx().prepareStatement(requete);
-        ps.setInt(1, t.getUser_id());
+//      ps.setInt(1, t.getUser_id());
+  int user_id = rec.getuseridF(email);
+       ps.setInt(1, user_id);
+      
+    
+     // ps.setInt(2, t.getUser_id());
+              //  ps.setString(1, t.getNom());
         ps.setString(2, t.getSubject());
         ps.setString(3, t.getMessage());
         ps.setString(4, t.getStatus());
+         ps.setString(5, t.getEmail_user());
        //ps.setString(5, t.getCreated_at());
         ps.executeUpdate();
         System.out.println("Reclamation ajoutée");
     } catch (SQLException ex) {
         System.out.println(ex.getMessage());
     }}
-        
    
       
     @Override
@@ -81,15 +90,17 @@ public class Rcrud implements EntityCRUD<Reclamation> {
     public void addEntity(Reclamation t) {
            
 try {
-            String requete="INSERT INTO reclamations (user_id,subject,message,status,created_at) "
+            String requete="INSERT INTO reclamations (user_id,subject,message,status,email_user) "
                 + "VALUES(?,?,?,?,?)";
         
              PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(requete);
-            
-              st.setInt(1, t.getUser_id());
+            st.setInt(1, t.getUser_id());
+              
+             
              st.setString(2, t.getSubject());
              st.setString(3, t.getMessage());
              st.setString(4, t.getStatus());
+             st.setString(5, t.getEmail_user());
             // st.setDate(5,  new java.sql.Date(t.getCreated_at().getTime()));
            
              st.executeUpdate();
@@ -113,7 +124,9 @@ try {
             pst.setString(1, t.getSubject());
             pst.setString(2, t.getMessage());
             pst.setString(3, t.getStatus());
-           // pst.setDate(5, new java.sql.Date(t.getCreated_at().getTime()));
+          
+// pst.setDate(5, new java.sql.Date(t.getCreated_at().getTime()));
+           
            // pst.setDate(5, new java.sql.Date(0, 0, 0));
             pst.executeUpdate();
             System.out.println("Reclamation modifiée");
@@ -142,33 +155,96 @@ try {
 //    return pst ; 
 //    }
 
-    @Override
-    public Reclamation FindReclamationById(int id) {
-
-             Reclamation r = new Reclamation();
-        try {
-            String requete = "select * from reclamations WHERE id= "+id;
- PreparedStatement pst = MyConnection.getInstance().getCnx()
+//    @Override
+//    public Reclamation FindReclamationByUserd(int user_id) {
+//
+//             Reclamation r = new Reclamation();
+//        try {
+//            String requete = "select * from reclamations WHERE user_id= "+user_id;
+// PreparedStatement pst = MyConnection.getInstance().getCnx()
+//                    .prepareStatement(requete);
+//       ResultSet rs=pst.executeQuery();
+//       
+//            while (rs.next()) {
+//           
+//                r.setId(rs.getInt("id"));
+//                //r.setUser_id(rs.getInt("user_id"));
+//                r.setSubject(rs.getString("subject"));
+//                r.setMessage(rs.getString("message"));
+//                r.setStatus(rs.getString("status"));
+//                
+//            
+//                 }
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Rcrud.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//       return r;
+//
+//    }
+    
+    public List<Reclamation>  recherche(int user_id  ) {
+       List<Reclamation> reclamationList = new ArrayList<>();
+         try {
+             String requete = "select * from reclamations where user_id='"+user_id+"'";
+              PreparedStatement pst = MyConnection.getInstance().getCnx()
                     .prepareStatement(requete);
-       ResultSet rs=pst.executeQuery();
-       
-            while (rs.next()) {
-           
+             
+             ResultSet rs=pst.executeQuery();
+              while(rs.next()){
+                Reclamation r = new Reclamation();
                 r.setId(rs.getInt("id"));
-                r.setUser_id(rs.getInt("user_id"));
+              //  r.setUser_id(rs.getInt("user_id"));
                 r.setSubject(rs.getString("subject"));
                 r.setMessage(rs.getString("message"));
-                r.setStatus(rs.getString("status"));
-                
-            
-                 }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Rcrud.class.getName()).log(Level.SEVERE, null, ex);
+               
+                reclamationList.add(r);
+            }
+         } catch (SQLException ex) {
+             Logger.getLogger(Rcrud.class.getName()).log(Level.SEVERE, null, ex);
+         }
+               return reclamationList;
+  }
+      public List<Reclamation> searchReclamationByUserId(String userId) {
+    List<Reclamation> reclamationList = new ArrayList<>();
+    
+    try {
+        // Connectez-vous à votre base de données ici en utilisant JDBC ou un ORM
+     
+        
+        // Préparez votre instruction SQL pour sélectionner les réclamations en fonction de "userid"
+        String sql = "SELECT * FROM reclamation WHERE userid = ?";
+       PreparedStatement pst = MyConnection.getInstance().getCnx()
+                    .prepareStatement(sql);
+        pst.setString(1, userId);
+        
+        // Exécutez votre requête et récupérez les résultats dans un ResultSet
+        ResultSet resultSet = pst.executeQuery();
+        
+        // Itérez sur les résultats et créez des objets Reclamation pour chaque ligne
+        while(resultSet.next()) {
+            Reclamation r = new Reclamation();
+        
+            r.setId(resultSet.getInt("id"));
+          //  r.setUser_id(resultSet.getInt("userid"));
+            r.setSubject(resultSet.getString("subject"));
+            r.setMessage(resultSet.getString("message"));
+            r.setDate(resultSet.getDate("created_at"));
+            reclamationList.add(r);
+             System.out.println(reclamationList);
         }
-       return r;
-
+        
+        // Fermez les ressources JDBC
+        resultSet.close();
+        pst.close();
+     
+    } catch(SQLException ex) {
+        ex.printStackTrace();
     }
+    
+    return reclamationList;
+        
+}
     
 // 
 //   @Override
@@ -196,7 +272,7 @@ try {
      */
     public void UserBanner(int id){
       try {
-          String requete="UPDATE users SET etat=2 where id_utilisateur="+id;
+          String requete="UPDATE users SET etat=2 where user_id="+id;
           Statement st= MyConnection.getInstance().getCnx()
                   .createStatement();
           st.executeUpdate(requete);
@@ -207,13 +283,82 @@ try {
           
 
 }
+    
 
+
+    
+    
+public int getuseridF(String email){
+    int val = 0;//as user_id
+    try {
+        String query = "SELECT u.id_user as user_id FROM user u  JOIN reclamations r ON u.email_user = r.email WHERE r.email  = ? ";
+        PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(query);
+        st.setString(1, email);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            val = rs.getInt("user_id"); //Modification pour récupérer l'alias user_id
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return val ;
+}
+
+
+    
+//       public int getuseridF(String email ){
+//       int val = -1;
+//        try {
+//            
+//            String query = " SELECT u.id_user as user_id FROM user u  JOIN reclamations r ON u.email_user = r.email WHERE r.email  = ? ";
+//            PreparedStatement st = new MyConnection().getCnx().prepareStatement(query);
+//            st.setString(1, email );
+//            ResultSet rs = st.executeQuery();
+//            if (rs.next()) {
+//              val =   rs.getInt("id_user");
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return val;
+//            
+//        }
+    
+    
+//    public int getUserid(String email_user) {
+//    int k=0;
+//        try {
+//            System.out.println(email_user);
+//        String query = "SELECT u.id as user_id FROM users u  JOIN reclamations r ON u.email  = r.email WHERE r.email  = ?";
+//        PreparedStatement pstmt = new MyConnection().getCnx().prepareStatement(query);
+//        pstmt.setString(1, email_user);
+//       
+//        ResultSet rs = pstmt.executeQuery();
+//        
+//        if (rs.next()) {
+//           // System.out.println("mlmlml");
+//           k= rs.getInt("user_id");
+//           
+//        }
+//    } catch (SQLException ex) {
+//        System.out.println(ex.getMessage());
+//    }
+//        System.out.println(k);
+//   return k;
+//}
+
+    
+    
+    
+    
+    
+    
     @Override
-    public int getNumberOfReclamation(int id) {
+    public int getNumberOfReclamation(int user_id) {
 
 int b = 0;
     try {
-          String requete="select count(*) from reclamations where id="+id;
+          String requete="select count(*) from reclamations where user_id="+user_id;
           Statement st= MyConnection.getInstance().getCnx()
                   .createStatement();
           ResultSet rs = st.executeQuery(requete);
@@ -227,48 +372,30 @@ int b = 0;
       }
     System.out.println(b);
     return b; }
-
+    
+    /**
+     *
+     * @param email
+     * @return
+     */
+//    public int getUserid(String email) {
+//  int k=0;
+//    try {
+//        
+//        String query = "SELECT u.id_user as user_id FROM user u  JOIN reclamations r ON u.email_user = r.email WHERE r.email  = ?";
+//        PreparedStatement pstmt = new MyConnection().getCnx().prepareStatement(query);
+//        pstmt.setString(1, email);
+//       
+//        ResultSet rs = pstmt.executeQuery();
+//        
+//        if (rs.next()) {
+//           k = rs.getInt("id_user");
+//        }
+//    } catch (SQLException ex) {
+//        System.out.println(ex.getMessage());
+//    }
+//        
+//   return k ;
+//}
 
     }
-
-    
-     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-        
-
-    
-    
-    
-    
-
-
-
-
-    
-    
-    
-            
-    
-
- 
-    
-
-
