@@ -32,6 +32,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import services.EvenementsCRUD;
 import services.ParticipantsCRUD;
+import static gui.ProfilMembreController.idcli;
 
 /**
  * FXML Controller class
@@ -59,7 +60,7 @@ public class ParticiperEController implements Initializable {
     @FXML
     private Button consult;
     
-
+    int k=idcli;
     
    
 
@@ -90,6 +91,7 @@ public class ParticiperEController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         showEvent();
+        
     }    
      private int EventSelectionner() {
     int selectedItem = -1;
@@ -100,52 +102,52 @@ public class ParticiperEController implements Initializable {
     return selectedItem;
     }
          
-    @FXML
-    private void participier(ActionEvent event) {
-       
-     
-       int x = EventSelectionner();
-       
-       
-         Evenements selectedEvent = tableevent.getSelectionModel().getSelectedItem();
-        
-    if (x == -1) {
-        Alert alert2 = new Alert(Alert.AlertType.WARNING);
-        alert2.setTitle("Aucun événement sélectionné");
-        alert2.setHeaderText(null);
-        alert2.setContentText("Veuillez sélectionner un événement pour participer.");
-        alert2.showAndWait();
-        return;
-    }
-    
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-    alert.setTitle("Confirmation de participation");
-    alert.setHeaderText("Vous voulez participer à l'événement suivant ");
-    alert.setContentText("Nom : " + selectedEvent.getNom() + "\n" +
-                         "Description : " + selectedEvent.getDescription() + "\n" +
-                         "Date de début : " + selectedEvent.getDate_debut() + "\n" +
-                         "Date de fin : " + selectedEvent.getDate_fin() + "\n" +
-                         "Lieu : " + selectedEvent.getLieu() + "\n\n" +
-                         "Êtes-vous sûr de vouloir participier à cet événement ?");
-    
-       Optional<ButtonType> result = alert.showAndWait();
-    if (result.isPresent() && result.get() == ButtonType.OK) {
-
- 
-         ParticipantsCRUD pcd = new ParticipantsCRUD();
-        Participants t = new Participants(x,5);
-        pcd.addEntityP(t);
-        // Afficher une alerte de succès
-        Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-        successAlert.setTitle("Participation réussie");
-        successAlert.setContentText("Félicitations vous êtes maintenant un participant à l'événement :  "+selectedEvent.getNom());
-        successAlert.showAndWait();
-        
-//        tableevent.getItems().clear();
-//           showEvent();
-    }
-    
-}
+//    @FXML
+//    private void participier(ActionEvent event) {
+//       
+//     
+//       int x = EventSelectionner();
+//       
+//       
+//         Evenements selectedEvent = tableevent.getSelectionModel().getSelectedItem();
+//        
+//    if (x == -1) {
+//        Alert alert2 = new Alert(Alert.AlertType.WARNING);
+//        alert2.setTitle("Aucun événement sélectionné");
+//        alert2.setHeaderText(null);
+//        alert2.setContentText("Veuillez sélectionner un événement pour participer.");
+//        alert2.showAndWait();
+//        return;
+//    }
+//    
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//    alert.setTitle("Confirmation de participation");
+//    alert.setHeaderText("Vous voulez participer à l'événement suivant ");
+//    alert.setContentText("Nom : " + selectedEvent.getNom() + "\n" +
+//                         "Description : " + selectedEvent.getDescription() + "\n" +
+//                         "Date de début : " + selectedEvent.getDate_debut() + "\n" +
+//                         "Date de fin : " + selectedEvent.getDate_fin() + "\n" +
+//                         "Lieu : " + selectedEvent.getLieu() + "\n\n" +
+//                         "Êtes-vous sûr de vouloir participier à cet événement ?");
+//    
+//       Optional<ButtonType> result = alert.showAndWait();
+//    if (result.isPresent() && result.get() == ButtonType.OK) {
+//
+// 
+//         ParticipantsCRUD pcd = new ParticipantsCRUD();
+//        Participants t = new Participants(x,idcli); // user_id
+//        pcd.addEntityP(t);
+//        // Afficher une alerte de succès
+//        Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+//        successAlert.setTitle("Participation réussie");
+//        successAlert.setContentText("Félicitations vous êtes maintenant un participant à l'événement :  "+selectedEvent.getNom());
+//        successAlert.showAndWait();
+//        
+////        tableevent.getItems().clear();
+////           showEvent();
+//    }
+//    
+//}
 
  
 

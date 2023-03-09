@@ -27,10 +27,10 @@ public class MainClass extends Application {
           try{
         //
         
-      Parent root = FXMLLoader.load(getClass().getResource("Reclamation.fxml")); 
+//      Parent root = FXMLLoader.load(getClass().getResource("Reclamation.fxml")); 
          // Parent root = FXMLLoader.load(getClass().getResource("UpRec.fxml"));
-   //    Parent root = FXMLLoader.load(getClass().getResource("Stat.fxml"));
-         // Parent root = FXMLLoader.load(getClass().getResource("AjouterReclamation.fxml")); 
+    //Parent root = FXMLLoader.load(getClass().getResource("Stat.fxml"));
+         Parent root = FXMLLoader.load(getClass().getResource("AjouterReclamation.fxml")); 
             // Parent root = FXMLLoader.load(getClass().getResource("Notification.fxml"));
         
        Scene scene = new Scene(root);

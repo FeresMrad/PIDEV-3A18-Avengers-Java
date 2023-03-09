@@ -13,11 +13,11 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SignInAdminController">
    <children>
-      <AnchorPane id="AnchorPane" prefHeight="601.0" prefWidth="1000.0" style="-fx-background-color: #3d3242;">
+      <AnchorPane id="AnchorPane" prefHeight="601.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);">
          <children>
-            <AnchorPane layoutX="507.0" layoutY="114.0" prefHeight="353.0" prefWidth="339.0" style="-fx-background-color: #9400d3;">
+            <AnchorPane layoutX="507.0" layoutY="114.0" prefHeight="353.0" prefWidth="339.0" style="-fx-background-color: #14B1A1;">
                <children>
-                  <Button fx:id="login_admin_btn" layoutX="44.0" layoutY="269.0" mnemonicParsing="false" onAction="#action_login_admin" prefHeight="36.0" prefWidth="239.0" style="-fx-background-color: #3d3242;" text="LOGIN" textFill="WHITE">
+                  <Button fx:id="login_admin_btn" layoutX="44.0" layoutY="269.0" mnemonicParsing="false" onAction="#action_login_admin" prefHeight="36.0" prefWidth="239.0" style="-fx-background-color: #008080;" text="LOGIN" textFill="WHITE">
                      <effect>
                         <Bloom>
                            <input>
@@ -53,7 +53,7 @@
                   <Font name="System Bold" size="25.0" />
                </font>
             </Label>
-            <Button fx:id="switch_signup_admin_btn" layoutX="84.0" layoutY="189.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="321.0" style="-fx-background-color: #9400d3;" text="Admin Dashboard" textFill="WHITE">
+            <Button fx:id="switch_signup_admin_btn" layoutX="84.0" layoutY="189.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="321.0" style="-fx-background-color: #008080;" text="Admin Dashboard" textFill="WHITE">
                <effect>
                   <Bloom>
                      <input>

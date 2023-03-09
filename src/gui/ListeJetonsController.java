@@ -37,7 +37,7 @@ public class ListeJetonsController implements Initializable {
     @FXML
     private TableColumn<Jetons, Integer> user_idlj;
     @FXML
-    private TableColumn<Jetons, String> usernamelj;
+    private TableColumn<Jetons, String> emaillj;
     @FXML
     private TableColumn<Jetons, Integer> countlj;
     @FXML
@@ -56,7 +56,7 @@ public class ListeJetonsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // Configure columns
         user_idlj.setCellValueFactory(new PropertyValueFactory<>("user_id"));
-        usernamelj.setCellValueFactory(new PropertyValueFactory<>("username"));
+        emaillj.setCellValueFactory(new PropertyValueFactory<>("email"));
         countlj.setCellValueFactory(new PropertyValueFactory<>("count"));
         
                 // Load data from database

@@ -10,15 +10,15 @@ package entities;
  */
 public class Jetons {
     private int user_id;
-    private String username;
+    private String email;
     private int count;
     
     public Jetons(){
     }
     
-    public Jetons(int user_id, int count, String username){
+    public Jetons(int user_id, int count, String email){
         this.user_id = user_id;
-        this.username = username;
+        this.email = email;
         this.count = count;
     }
 
@@ -30,8 +30,8 @@ public class Jetons {
         return count;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
     public void setUser_id(int user_id) {
@@ -42,8 +42,8 @@ public class Jetons {
         this.count = count;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
     
     /**

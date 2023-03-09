@@ -1,38 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane3" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.InterfaceMembreController">
+<AnchorPane id="AnchorPane" fx:id="rootPane3" prefHeight="617.0" prefWidth="1058.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.InterfaceMembreController">
    <children>
-      <VBox prefHeight="650.0" prefWidth="998.0" style="-fx-background-color: #9EBFAD;">
+      <VBox layoutX="247.0" prefHeight="621.0" prefWidth="814.0" style="-fx-background-color: #CCF5F1;">
          <children>
-            <Pane fx:id="paneId" maxHeight="560.0" maxWidth="1000.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="56.0" prefWidth="998.0" style="-fx-background-color: #4F996D;">
+            <Pane fx:id="paneId" maxHeight="560.0" maxWidth="1072.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="68.0" prefWidth="850.0" style="-fx-background-color: #14B1A1;">
                <children>
-                  <Text fill="WHITE" layoutX="350.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TBADEL" textAlignment="CENTER" wrappingWidth="300.41558837890625">
-                     <font>
-                        <Font name="Corbel Bold Italic" size="36.0" />
-                     </font>
-                  </Text>
-                  <Button fx:id="profilbtn" layoutX="50.0" layoutY="12.0" mnemonicParsing="false" onAction="#ActionProfilbtn" prefHeight="31.0" prefWidth="61.0" style="-fx-background-color: #143F51;" text="Profil" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold Italic" size="15.0" />
-                     </font>
-                     <effect>
-                        <Bloom>
-                           <input>
-                              <DropShadow />
-                           </input>
-                        </Bloom>
-                     </effect></Button>
-                  <Button fx:id="logoffbtn1" layoutX="879.0" layoutY="12.0" mnemonicParsing="false" onAction="#ActionLogOffbtn" style="-fx-background-color: #143F51;" text="LogOut" textFill="WHITE">
+                  <Button fx:id="profilbtn" layoutX="17.0" layoutY="14.0" mnemonicParsing="false" onAction="#ActionProfilbtn" prefHeight="31.0" prefWidth="61.0" style="-fx-background-color: #143F51;" text="Profil" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="15.0" />
                      </font>
@@ -44,36 +32,87 @@
                         </Bloom>
                      </effect></Button>
                </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
             </Pane>
-            <Pane fx:id="panell" maxHeight="560.0" maxWidth="1000.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="56.0" prefWidth="998.0" style="-fx-background-color: #4 #9EBFADF996D;">
+            <Label fx:id="wlcm" alignment="CENTER" maxWidth="-Infinity" prefHeight="380.0" prefWidth="825.0" text="Welcome! " textFill="#14b1a1">
+               <font>
+                  <Font name="System Bold" size="69.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="100.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="-1.0" prefHeight="621.0" prefWidth="253.0" style="-fx-background-color: linear-gradient(to bottom, #14B1A1, #CCF5F1);">
+         <children>
+            <HBox prefHeight="93.0" prefWidth="244.0">
                <children>
-                  <Hyperlink alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="750.0" layoutY="10.0" text="Produits" textAlignment="CENTER" visited="true">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Hyperlink>
-                  <Hyperlink layoutX="600.0" layoutY="10.0" text="XXXXXXX" visited="true">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Hyperlink>
-                  <Hyperlink layoutX="450.0" layoutY="10.0" text="XXXXXXXXX" visited="true">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Hyperlink>
-                  <Hyperlink layoutX="300.0" layoutY="10.0" prefHeight="38.0" prefWidth="91.0" text="XXXXX" visited="true">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Hyperlink>
-                  <Hyperlink layoutX="150.0" layoutY="10.0" text="Reclamations" visited="true">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Hyperlink>
+                  <ImageView fitHeight="200.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@Logopit_1675351986074.png" />
+                     </image>
+                  </ImageView>
                </children>
-            </Pane>
+            </HBox>
+            <Hyperlink alignment="TOP_LEFT" contentDisplay="CENTER" onAction="#p" style="-fx-text-fill: black;" text="Produits" textAlignment="CENTER" visited="true">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Hyperlink>
+            <Hyperlink onAction="#redservices" style="-fx-text-fill: black;" text="Services" visited="true">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Hyperlink>
+            <Hyperlink onAction="#consulteven" style="-fx-text-fill: black;" text="Consulter Evenements" visited="true">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Hyperlink>
+            <Hyperlink onAction="#ajouterreclam" style="-fx-text-fill: black;" text="Reclamations" visited="true">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Hyperlink>
+            <Hyperlink onAction="#reds" prefHeight="38.0" prefWidth="91.0" style="-fx-text-fill: black;" text="Graphes" visited="true">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Hyperlink>
+            <HBox prefHeight="180.0" prefWidth="245.0" />
+            <Button fx:id="logoffbtn1" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#ActionLogOffbtn" prefHeight="140.0" prefWidth="79.0" style="-fx-background-color: #143F51;" text="LogOut" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+               <effect>
+                  <Bloom>
+                     <input>
+                        <DropShadow />
+                     </input>
+                  </Bloom>
+               </effect>
+               <VBox.margin>
+                  <Insets bottom="50.0" left="80.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
    </children>

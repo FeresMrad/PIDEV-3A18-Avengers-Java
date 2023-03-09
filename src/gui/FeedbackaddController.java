@@ -43,6 +43,8 @@ import org.controlsfx.control.Notifications;
 import javafx.geometry.Pos;
 import javafx.util.Duration;
 import com.google.api.translate.Language;
+import entities.Transaction;
+import static gui.ProfilMembreController.idcli;
 //import com.google.cloud.translate.Translate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -62,9 +64,9 @@ import gui.Translator;
  *
  * @author Feriel
  */
-
 public class FeedbackaddController implements Initializable {
 
+    int userId = idcli;
     @FXML
     private TextArea commentTextArea;
     @FXML
@@ -75,16 +77,18 @@ public class FeedbackaddController implements Initializable {
     private Label msg;
     @FXML
     private Label username;
-   // private int transactionId;
-    private String api="f346669e7560d0c49c5533beed0caeb408884353";
+    // private int transactionId;
+    private String api = "f346669e7560d0c49c5533beed0caeb408884353";
 
-    @FXML
-    private ComboBox<String> languageComboBox;
     @FXML
     private Button translateButton;
+    private int transactionId;
+    Transaction t = (Transaction) Context.getInstance().getContextObject("Transaction");
+    @FXML
+    private Button btnHome;
+
     //String comment = commentTextArea.getText();
     // String rating = msg.getText();
-
     /**
      * Initializes the controller class.
      */
@@ -96,25 +100,15 @@ public class FeedbackaddController implements Initializable {
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 msg.setText(newValue + " Stars");
             }
+
         });
-        
-        FeedbackCRUD pcd = new FeedbackCRUD();
-         String name = pcd.getName(1);
+
+        FeedbackCRUD feedbackCRUD = new FeedbackCRUD();
+        String name = feedbackCRUD.getName(t.getId());
         username.setText(name);
-    
-       /* //language
-        ObservableList<String> languageList = FXCollections.observableArrayList("en","fr");
-        languageComboBox.setItems(languageList);
-        //Feedback f= new Feedback();
-        /*FeedbackCRUD fcdd = new FeedbackCRUD();
-         String name = fcdd.getName(); // replace 1 with the transaction ID of the current user
-        username.setText(name);*/
-        // Get the username of the user associated with the transaction
-       // String username = fcd.getName(transactionId);*/
+        System.out.println(name);
     }
 
-
-    
     //Ajouter feedback
     @FXML
     private void handleAddButtonAction(ActionEvent event) {
@@ -130,7 +124,7 @@ public class FeedbackaddController implements Initializable {
             alert.showAndWait();
             return;
         }
- 
+
         //controle de saisie
         if (msg.getText().isEmpty() || commentTextArea.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -143,7 +137,7 @@ public class FeedbackaddController implements Initializable {
         String rating = msg.getText();
 
         FeedbackCRUD fcd = new FeedbackCRUD();
-        Feedback f = new Feedback(1, rating, filteredText, new java.sql.Date(new Date().getTime()));
+        Feedback f = new Feedback(t.getId(), rating, filteredText, new java.sql.Date(new Date().getTime()));
 
         //Alert de confirmation
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -159,7 +153,7 @@ public class FeedbackaddController implements Initializable {
             successAlert.setContentText("Feedback ajouté avec succès.");
             successAlert.showAndWait();
             feedbackAddedSuccessfully = true;
-            
+
             // call showNotification() function if feedback is successfully added
             if (feedbackAddedSuccessfully) {
                 showNotification();
@@ -199,7 +193,8 @@ public class FeedbackaddController implements Initializable {
         notificationBuilder.show();
     }
 
-/*public void translateComment(String targetLang) {
+
+    /*public void translateComment(String targetLang) {
     String text = commentTextArea.getText();
 
     try {
@@ -224,9 +219,9 @@ public class FeedbackaddController implements Initializable {
       alert.showAndWait();
     }
   }*/
-   @FXML
+    @FXML
     void translateComment(ActionEvent event) {
-          String sourceLanguage = "en";
+        String sourceLanguage = "en";
         String targetLanguage = "fr";
         String text = commentTextArea.getText();
         String apiKey = "72a1860d84msh15024c99fb7e206p11200bjsncc83812f32eb";
@@ -255,7 +250,20 @@ public class FeedbackaddController implements Initializable {
             alert.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
-           
+
         }
 
-}}
+    }
+
+    @FXML
+    private void goHome(ActionEvent event) {
+        //redirection
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("InterfaceMembre.fxml"));
+        try {
+            Parent root = loader.load();
+            btn.getScene().setRoot(root);
+        } catch (IOException ex) {
+            Logger.getLogger(FeedbackaddController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}

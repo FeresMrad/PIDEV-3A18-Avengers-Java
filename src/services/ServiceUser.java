@@ -5,6 +5,7 @@
  */
 package services;
 
+import interfaces.IService;
 import java.security.MessageDigest;
 //import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -16,11 +17,12 @@ import entities.Admin;
 import entities.Logisticien;
 import entities.Client;
 import entities.User;
-import com.esprit.utils.DataSource;
+import utils.MyConnection;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.ColumnText;
@@ -31,9 +33,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
- 
+
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,8 +54,9 @@ import javax.xml.bind.DatatypeConverter;
  */
 public class ServiceUser implements IService<User> {
 
-    Connection cnx = DataSource.getInstance().getCnx();
-       public int existeMail(User u) throws SQLException {
+    Connection cnx = MyConnection.getInstance().getCnx();
+
+    public int existeMail(User u) throws SQLException {
         Statement s = cnx.createStatement();
         ResultSet rs = s.executeQuery("SELECT COUNT(*) from user WHERE email_user = '" + u.getEmail_user() + "'");
         int size = 0;
@@ -60,6 +64,7 @@ public class ServiceUser implements IService<User> {
         size = rs.getInt(1);
         return size;
     }
+
     @Override
     public void ajouter(User u) {
 
@@ -67,7 +72,6 @@ public class ServiceUser implements IService<User> {
         try {
             String mdp = Hash();
 
-           
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setString(1, u.getNom_user());
             ps.setString(2, u.getPrenom_user());
@@ -120,11 +124,11 @@ public class ServiceUser implements IService<User> {
         return list;
 
     }
-    
-public void generatePDF(File file) throws IOException, DocumentException {
- Font catFont = new Font(Font.FontFamily.TIMES_ROMAN,20,Font.BOLD);
-    Document doc = new Document(PageSize.LEGAL);
-    
+
+    public void generatePDF(File file) throws IOException, DocumentException {
+        Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD);
+        Document doc = new Document(PageSize.LEGAL);
+
         ObservableList<User> liste = this.getAll();
         PdfPTable table = new PdfPTable(6);
         PdfPCell c1 = new PdfPCell(new Phrase("ID"));
@@ -143,39 +147,39 @@ public void generatePDF(File file) throws IOException, DocumentException {
         try {
             PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(file.getPath()));
             doc.open();
-            
-  //  ColumnText.showTextAligned(writer.getDirectContent(),Element.ALIGN_CENTER , new Paragraph("Liste des utilisateurs :"),doc.top(), doc.top(),0);
-      doc.add(new Phrase("Liste des utilisateurs  :",catFont));
-   // String imageUrl = "http://www.eclipse.org/xtend/images/java8_logo.png";
-    //Image image2 = Image.getInstance(new URL(imageUrl));
-  ColumnText.showTextAligned(writer.getDirectContent(),Element.ALIGN_RIGHT , new Phrase("Date d'impression:" +(new Date())),doc.right(),doc.top()+20,0);
-  //ColumnText.showTextAligned(writer.getDirectContent(),Element.ALIGN_CENTER , new Phrase("Liste des utilisateurs :"),doc.top(), doc.top(),0);
+
+            //  ColumnText.showTextAligned(writer.getDirectContent(),Element.ALIGN_CENTER , new Paragraph("Liste des utilisateurs :"),doc.top(), doc.top(),0);
+            doc.add(new Phrase("Liste des utilisateurs  :", catFont));
+            // String imageUrl = "http://www.eclipse.org/xtend/images/java8_logo.png";
+            //Image image2 = Image.getInstance(new URL(imageUrl));
+            ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_RIGHT, new Phrase("Date d'impression:" + (new Date())), doc.right(), doc.top() + 20, 0);
+            //ColumnText.showTextAligned(writer.getDirectContent(),Element.ALIGN_CENTER , new Phrase("Liste des utilisateurs :"),doc.top(), doc.top(),0);
 //doc.addTitle("Liste utilisateurs");
- 
-liste.stream().map((item) -> {
-      int id = item.getId_user();
-      table.addCell(String.valueOf(id));
-      String nom_user = item.getNom_user();
-      table.addCell(nom_user);
-      String prenom_user = item.getPrenom_user();
-      table.addCell(prenom_user);
-      int tel_user = item.getTel_user();
-      table.addCell(String.valueOf(tel_user));
-      String email_user = item.getEmail_user();
-      table.addCell(email_user);
-      
-      String role = item.getRole();
+
+            liste.stream().map((item) -> {
+                int id = item.getId_user();
+                table.addCell(String.valueOf(id));
+                String nom_user = item.getNom_user();
+                table.addCell(nom_user);
+                String prenom_user = item.getPrenom_user();
+                table.addCell(prenom_user);
+                int tel_user = item.getTel_user();
+                table.addCell(String.valueOf(tel_user));
+                String email_user = item.getEmail_user();
+                table.addCell(email_user);
+
+                String role = item.getRole();
                 return role;
             }).forEachOrdered((role) -> {
                 table.addCell(role);
             });
-           doc.add(table);
+            doc.add(table);
 //            String imageUrl = "https://i.ibb.co/hBwvmCx/logo2.png";
 //            Image image2 = Image.getInstance(new URL(imageUrl));
 //            doc.add(image2);
             doc.close();
 
-              System.out.println(" Users Pdf Generated With Success");
+            System.out.println(" Users Pdf Generated With Success");
             writer.close();
         } catch (DocumentException | FileNotFoundException e) {
         }
@@ -255,20 +259,21 @@ liste.stream().map((item) -> {
         return list;
 
     }
-
+//        properties.put("mail.smtp.port", "25");
+//        String MonEmail = "amen.benkhalifaaa@gmail.com";
+//        String password = "Nabelnapro80002007";
+//        String MonEmail = "autoxpress2023@gmail.com";
+//        String password = "wxrdwzwwjezmcavk";
     public void sendMail(String receveursList, String object, String corps) {
         Properties properties = new Properties();
 
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.host", "smtp.outlook.com");
         properties.put("mail.smtp.port", "587");
-//        properties.put("mail.smtp.port", "25");
 
-        String MonEmail = "autoxpress2023@gmail.com";
-        String password = "wxrdwzwwjezmcavk";
-//        String MonEmail = "hazemsalmani01@gmail.com";
-//        String password = "x550vxx550vx";
+        String MonEmail = "pidev20233@outlook.com";
+        String password = "azerty123";
 
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
 
@@ -378,7 +383,7 @@ liste.stream().map((item) -> {
         return matcher.find();
     }
 
-   public String crypterPassword(String password) {
+    public String crypterPassword(String password) {
         String hashValue = "";
         try {
 

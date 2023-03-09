@@ -43,7 +43,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Cell;
@@ -53,6 +55,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import static javax.print.DocFlavor.BYTE_ARRAY.PDF;
 import static javax.print.DocFlavor.INPUT_STREAM.PDF;
 import static javax.print.DocFlavor.URL.PDF;
@@ -100,6 +103,9 @@ public class ReclamationController implements Initializable {
     private Button btndel;
     @FXML
     private Button btnadd;
+    @FXML
+    private Button retour;
+   
    
     
     public void showRecl(){
@@ -186,7 +192,7 @@ public class ReclamationController implements Initializable {
           Rcrud pcd = new Rcrud();
           Reclamation r = new Reclamation(resUserid, resDesc);
         
-          pcd.ajouterReclamation(r);
+//          pcd.ajouterReclamation(r,t);
      
         System.out.println("Done!!"); 
     
@@ -202,7 +208,6 @@ public class ReclamationController implements Initializable {
     }
     return selectedItem;
 }
-    @FXML
     private void modifNotif(ActionEvent event) throws SQLException {
       
              int x = ReclamSelectionner();
@@ -253,7 +258,22 @@ public class ReclamationController implements Initializable {
         }}
 
   
+  @FXML
+    void RET(ActionEvent event) throws IOException {
+        Parent page2 = FXMLLoader.load(getClass().getResource("InterfaceMembre.fxml"));
+        Scene scene2 = new Scene(page2);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.setScene(scene2);
+        app_stage.show();
     }
+
+
+
+
+
+
+
+}
     
     
 

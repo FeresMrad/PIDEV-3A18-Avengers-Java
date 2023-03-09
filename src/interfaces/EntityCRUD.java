@@ -16,19 +16,19 @@ public interface EntityCRUD <T> {
   // public void addEntity(T t);
    
 
-//     public void supprimerReclamation(T t);
+//     public void supprimerReclamation(T t);+
 //     public void updateReclamation(T t);
 //     public List<T> displayReclamations();
 //    
     //public void ajouterReclaamtion(T t );
-    public void ajouterReclamation(T t);
+    public void ajouterReclamation(T t,String e);
     public List<T>entitiesList();
     public void suppReclamation(int id);
      public void updReclamation(T t,int x);
    
      public void addEntity(Reclamation t);
    //  public Reclamation getById(int id);
-      public Reclamation FindReclamationById(int id); 
+    //  public Reclamation FindReclamationById(int user_id); 
      public int  getNumberOfReclamation(int id);
 
 }

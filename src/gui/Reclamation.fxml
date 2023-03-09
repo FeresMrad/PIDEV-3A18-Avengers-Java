@@ -32,5 +32,6 @@
       <TextField fx:id="tfsubject" layoutX="406.0" layoutY="130.0" promptText="A propos" />
       <Button fx:id="btndel" layoutX="492.0" layoutY="172.0" mnemonicParsing="false" onAction="#suppRec" prefHeight="18.0" prefWidth="99.0" text="SUPPRIMER" />
       <Button fx:id="btnadd" layoutX="275.0" layoutY="172.0" mnemonicParsing="false" onAction="#addreclam" prefHeight="25.0" prefWidth="78.0" text="AJOUTER" />
+      <Button fx:id="retour" layoutX="-1.0" layoutY="-1.0" mnemonicParsing="false" onAction="#RET" prefHeight="25.0" prefWidth="99.0" text="Page d'acceuil" />
    </children>
 </AnchorPane>

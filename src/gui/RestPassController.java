@@ -155,6 +155,7 @@ String emailPW = null;
             emailPW = mail;
             sU.sendMail(mail, "Mise a jour du mot de passe", "voici votre code de " + codeVerification + "  ");
             sU.information_Box("Succes", "verifier votre boite mail");
+            System.out.println(codeVerification);
             visibility(false,true,false);
         }
     }

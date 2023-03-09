@@ -37,7 +37,25 @@ public class ParticipantsCRUD implements CRUDP<Participants> {
             System.out.println(ex.getMessage());
         }
     }
-
+    public List<Participants> getAllParticipantsByEventId(int eventId) {
+    List<Participants> participantsList = new ArrayList<>();
+    try {
+        String query = "SELECT * FROM participants WHERE evenement_id=?";
+        PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(query);
+        st.setInt(1, eventId);
+        ResultSet resultSet = st.executeQuery();
+        while (resultSet.next()) {
+            Participants p = new Participants(
+                resultSet.getInt("evenement_id"),
+                resultSet.getInt("user_id")
+            );
+            participantsList.add(p);
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return participantsList;
+}
     @Override
     public List<Participants> entitiesListP() {
              ArrayList<Participants> myList = new ArrayList();
@@ -118,7 +136,7 @@ public List<Participants> entitiesListP(int x) {
     List<Participants> myList = new ArrayList<>();
     try {
 //          String requete = "SELECT * FROM participants WHERE evenement_id=?";
-       String requete= "SELECT p.id, p.user_id, u.nom, u.prenom, u.email FROM participants p JOIN users u ON p.user_id = u.id WHERE p.evenement_id = ?";
+       String requete= "SELECT p.id, p.user_id, u.nom_user, u.prenom_user, u.email_user FROM participants p JOIN user u ON p.user_id = u.id_user WHERE p.evenement_id = ?";
         PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
         pst.setInt(1, x);
         ResultSet rs = pst.executeQuery();
@@ -127,9 +145,9 @@ public List<Participants> entitiesListP(int x) {
             p.setId(rs.getInt(1));
             p.setEvenements_id(x);
             p.setUser_id(rs.getInt("user_id"));
-            p.setNom(rs.getString("nom"));
-            p.setPrenom(rs.getString("prenom"));
-            p.setEmail(rs.getString("email"));
+            p.setNom(rs.getString("nom_user"));
+            p.setPrenom(rs.getString("prenom_user"));
+            p.setEmail(rs.getString("email_user"));
             myList.add(p);
         }
     } catch (SQLException ex) {
@@ -167,15 +185,15 @@ public List<Participants> entitiesListP(int x) {
 
 
 public String[] getUserById(int id) throws SQLException {
-    String query = "SELECT name, surname, email FROM users WHERE id = ?";
+    String query = "SELECT nom_user, prenom_user, email_user FROM user WHERE id_user = ?";
     PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(query);
     st.setInt(1, id);
     ResultSet resultSet = st.executeQuery();
     if (resultSet.next()) {
         String[] user = new String[3];
-        user[0] = resultSet.getString("name");
-        user[1] = resultSet.getString("surname");
-        user[2] = resultSet.getString("email");
+        user[0] = resultSet.getString("nom_user");
+        user[1] = resultSet.getString("prenom_user");
+        user[2] = resultSet.getString("email_user");
         return user;
     }
     return null;

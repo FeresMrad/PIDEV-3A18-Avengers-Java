@@ -265,9 +265,9 @@ public class ListeParticipantsController implements Initializable {
 //            String id = rs.getString("id");
             String evenement_id = rs.getString("evenement_id");
 //            String user_id = rs.getString("user_id");
-                String nom = rs.getString("nom");
-        String prenom = rs.getString("prenom");
-        String email = rs.getString("email");
+                String nom = rs.getString("nom_user");
+        String prenom = rs.getString("prenom_user");
+        String email = rs.getString("email_user");
 
 
 //            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
@@ -314,7 +314,7 @@ alert.showAndWait();
     private void genererpdf(ActionEvent event) throws IOException {
         try {
 //            PreparedStatement pstmt = MyConnection.getInstance().getCnx().prepareStatement("SELECT p.id,p.evenement_id, p.user_id, u.nom, u.prenom, u.email FROM participants p JOIN users u ON p.user_id = u.id WHERE p.evenement_id = ?");
-             PreparedStatement pstmt = MyConnection.getInstance().getCnx().prepareStatement("SELECT p.evenement_id, u.nom, u.prenom, u.email FROM participants p JOIN users u ON p.user_id = u.id WHERE p.evenement_id = ?");
+             PreparedStatement pstmt = MyConnection.getInstance().getCnx().prepareStatement("SELECT p.evenement_id, u.nom_user, u.prenom_user, u.email_user FROM participants p JOIN user u ON p.user_id = u.id_user WHERE p.evenement_id = ?");
 
             pstmt.setInt(1, getEvent());
             ResultSet rs = pstmt.executeQuery();
@@ -356,16 +356,16 @@ alert.showAndWait();
 
    
   
-  String query = "SELECT email,nom FROM users WHERE id IN (SELECT user_id FROM participants WHERE evenement_id = ?)";
+  String query = "SELECT email_user,nom_user FROM user WHERE id_user IN (SELECT user_id FROM participants WHERE evenement_id = ?)";
     PreparedStatement statement = MyConnection.getInstance().getCnx().prepareStatement(query);
     statement.setInt(1, getEvent());
     ResultSet resultSet = statement.executeQuery();
 
     while (resultSet.next()) {
         try {
-            String recipient = resultSet.getString("email");
+            String recipient = resultSet.getString("email_user");
             String subject = "Reminder: Evenement prévu:"+tfeventnom.getText();
-            String body = "Dear "+resultSet.getString("nom")+",\n\nThis is a friendly reminder that you have an Event :"+tfeventnom.getText()+".\n\n We hope to see you there on "+getDateE()+" in "+getLieue()+"\n\nBest regards";
+            String body = "Dear "+resultSet.getString("nom_user")+",\n\nThis is a friendly reminder that you have an Event :"+tfeventnom.getText()+".\n\n We hope to see you there on "+getDateE()+" in "+getLieue()+"\n\nBest regards";
             
             // Create a new message
             Message message = new MimeMessage(session);

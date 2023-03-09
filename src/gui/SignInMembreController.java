@@ -5,7 +5,7 @@
  */
 package gui;
 
-import com.esprit.utils.DataSource;
+import utils.MyConnection;
 import java.io.IOException;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -62,7 +62,7 @@ public class SignInMembreController implements Initializable {
     @FXML
     private  void action_login_membre(ActionEvent event ) {
 //        String sql = "Select * from user where email_user = ? and mdp_user =? and role='Client'  ";
-//        cn = DataSource.getInstance().getCnx();
+//        cn = MyConnection.getInstance().getCnx();
 //        try {
 //            String newMD = "";
 //          String mdp = Hash();
@@ -90,7 +90,7 @@ public class SignInMembreController implements Initializable {
 //            JOptionPane.showMessageDialog(null, e);
 //        }
      String sql = "Select * from user where email_user = ? and mdp_user =?   ";
-        cn = DataSource.getInstance().getCnx();
+        cn = MyConnection.getInstance().getCnx();
         try {
             String newMD = "";
           String mdp = Hash();
@@ -102,7 +102,9 @@ public class SignInMembreController implements Initializable {
             rs = pst.executeQuery();
             if (rs.next()) {
                 ProfilMembreController.idcli = rs.getInt(1);
-                System.out.println(ProfilMembreController.idcli);
+                int idSessions = ProfilMembreController.idcli = rs.getInt(1);
+//                System.out.println(ProfilMembreController.idcli);
+System.out.println(idSessions);
                 JOptionPane.showMessageDialog(null, "E-mail and Password is Correct");
                 root = FXMLLoader.load(getClass().getResource("../gui/InterfaceMembre.fxml"));
                 stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

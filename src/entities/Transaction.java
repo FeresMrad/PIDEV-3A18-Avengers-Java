@@ -57,6 +57,27 @@ public class Transaction {
         this.from_user_item_id = from_user_item_id;
         this.from_user_id = from_user_id;
     }
+    
+        public Transaction (int jetons_prop, int jetons_dem, String commentaire, String from_user_item, int from_user_item_id, int from_user_id, String etat) {
+        this.jetons_prop = jetons_prop;
+        this.jetons_dem = jetons_dem;
+        this.commentaire = commentaire;
+        this.from_user_item = from_user_item;
+        this.from_user_item_id = from_user_item_id;
+        this.from_user_id = from_user_id;
+        this.etat = etat;
+    }
+        public Transaction (int jetons_prop, int jetons_dem, String commentaire, String from_user_item, int from_user_item_id, int from_user_id, int to_user_item_id, String to_user_item, int to_user_id) {
+        this.jetons_prop = jetons_prop;
+        this.jetons_dem = jetons_dem;
+        this.commentaire = commentaire;
+        this.from_user_item = from_user_item;
+        this.from_user_item_id = from_user_item_id;
+        this.from_user_id = from_user_id;
+        this.to_user_item_id = to_user_item_id;
+        this.to_user_item = to_user_item;
+        this.to_user_id = to_user_id;
+        }
 
     public int getId() {
         return id;

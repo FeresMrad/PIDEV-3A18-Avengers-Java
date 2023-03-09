@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="627.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SingUpMembreController">
+<AnchorPane id="AnchorPane" prefHeight="627.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SingUpMembreController">
    <children>
-      <AnchorPane id="AnchorPane" prefHeight="626.0" prefWidth="1000.0" style="-fx-background-color: #9EBFAD;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane id="AnchorPane" prefHeight="626.0" prefWidth="1000.0" style="-fx-background-color: #CCF5F1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane layoutX="465.0" prefHeight="627.0" prefWidth="566.0" style="-fx-background-color: #4F996D;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane layoutX="465.0" prefHeight="627.0" prefWidth="566.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Button fx:id="add_membre_btn" alignment="CENTER" contentDisplay="CENTER" layoutX="190.0" layoutY="550.0" mnemonicParsing="false" onAction="#action_add_membre" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #143F51;" text="SIGN UP" textFill="WHITE">
                      <effect>

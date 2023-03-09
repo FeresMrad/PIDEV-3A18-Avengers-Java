@@ -131,13 +131,14 @@ public class FeedbackCRUD implements EntityCRUDF<Feedback> {
 //jointure
    public String getName(int transactionId) {
     try {
-        String query = "SELECT username FROM users u JOIN transactions t ON u.id = t.to_user_id JOIN feedback f ON t.id = f.transaction_id WHERE t.id = ?";
+        String query = "SELECT nom_user FROM user u JOIN transactions t ON u.id_user = t.to_user_id JOIN feedback f ON t.id = f.transaction_id WHERE t.id = ?";
         PreparedStatement pstmt = new MyConnection().getCnx().prepareStatement(query);
         pstmt.setInt(1, transactionId);
         ResultSet rs = pstmt.executeQuery();
 
         if (rs.next()) {
-            return rs.getString("username");
+            return rs.getString("nom_user");
+             
         }
     } catch (SQLException ex) {
         System.out.println(ex.getMessage());

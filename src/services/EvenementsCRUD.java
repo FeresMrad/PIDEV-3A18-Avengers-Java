@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.List;
 import utils.MyConnection;
 import entities.Evenements;
+import static gui.ProfilMembreController.idcli;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -98,7 +99,7 @@ public class EvenementsCRUD implements EventCRUDB<Evenements>{
              PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(Query);
           st.setString(1, " " + t.getComment()); // 
         st.setInt(2, t.getId());
-        st.setInt(3, 5);
+        st.setInt(3, idcli);
         st.executeUpdate();
 
              

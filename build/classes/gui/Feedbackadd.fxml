@@ -31,7 +31,7 @@
         <TextArea fx:id="commentTextArea" layoutX="144.0" layoutY="243.0" prefHeight="168.0" prefWidth="511.0" />
          <HBox alignment="CENTER_RIGHT" layoutX="144.0" layoutY="418.0" prefWidth="511.0" />
         <Button fx:id="btn" layoutX="618.0" layoutY="429.0" mnemonicParsing="false" onAction="#handleAddButtonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-color: #14B1A1;" text="Add" textFill="#cdfff9" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="7.0" layoutY="-43.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-8.0" layoutY="-42.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Logopit_1675351986074.png" />
          </image>
@@ -48,6 +48,7 @@
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
+      <Button fx:id="btnHome" layoutX="552.0" layoutY="471.0" mnemonicParsing="false" onAction="#goHome" prefHeight="29.0" prefWidth="86.0" style="-fx-background-color: #14B1A1;" text="Home" textFill="#cdfff9" />
       
     </children>
 </AnchorPane>

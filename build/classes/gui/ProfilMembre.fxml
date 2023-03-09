@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane2" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #9EBFAD;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProfilMembreController">
+<AnchorPane id="AnchorPane" fx:id="rootPane2" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProfilMembreController">
    <children>
       <Label layoutX="80.0" layoutY="425.0" prefHeight="21.0" prefWidth="75.0" text="PRENOM :" textFill="WHITE">
          <font>

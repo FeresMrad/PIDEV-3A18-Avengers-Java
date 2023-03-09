@@ -7,6 +7,7 @@ package gui;
 
 
 import entities.Bien;
+import static gui.ProfilMembreController.idcli;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -24,12 +25,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import utils.MyConnection;
 
 /**
@@ -59,7 +62,7 @@ public class FAvorisController implements Initializable {
       public ObservableList<Bien> data = FXCollections.observableArrayList();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        int userId = 2;
+        int userId=idcli;
 
         // Récupérer les données des biens favoris de l'utilisateur connecté
         data = FXCollections.observableArrayList();
@@ -79,7 +82,7 @@ public class FAvorisController implements Initializable {
         String description = rs.getString("description");
         String imagePath = rs.getString("image");
         String categorie = rs.getString("categorie");
-        File file = new File("C:\\Users\\Nouhe\\Documents\\NetBeansProjects\\GestionBiensEtServices\\src\\images\\" + imagePath);
+        File file = new File("C:\\Users\\Feriel\\Documents\\NetBeansProjects\\TbadelTrans\\src\\images\\" + imagePath);
         Image image = new Image(file.toURI().toString());
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(150);
@@ -104,6 +107,41 @@ public class FAvorisController implements Initializable {
         
         
         
+            
+        TableColumn<Bien, Void> actionCol = new TableColumn<>("Retirer");
+Callback<TableColumn<Bien, Void>, TableCell<Bien, Void>> cellFactory = new Callback<TableColumn<Bien, Void>, TableCell<Bien, Void>>() {
+    @Override
+    public TableCell<Bien, Void> call(final TableColumn<Bien, Void> param) {
+        final TableCell<Bien, Void> cell = new TableCell<Bien, Void>() {
+
+            private final Button btn = new Button("Retirer");
+
+            {
+                btn.setOnAction((ActionEvent event) -> {
+                    Bien bien = getTableView().getItems().get(getIndex());
+                    int idBien = bien.getId(); // Récupérer l'ID du bien à supprimer
+                    // Appeler la méthode de suppression en passant l'ID du bien à supprimer
+                    supprimerBien(idBien);
+                });
+            }
+
+            @Override
+            public void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
+        };
+        return cell;
+    }
+};
+actionCol.setCellFactory(cellFactory);
+tablefavoris.getColumns().add(actionCol);
+        
+        
         
         
         
@@ -113,6 +151,26 @@ public class FAvorisController implements Initializable {
         
         
     }
+    private void supprimerBien(int idBien) {
+    try {
+        String requete = "DELETE FROM favoris WHERE id_item = ?";
+        PreparedStatement st = MyConnection.getInstance().getCnx().prepareStatement(requete);
+        st.setInt(1, idBien);
+        st.executeUpdate();
+        data.removeIf(bien -> bien.getId() == idBien); // Supprimer le bien de la liste des biens
+    } catch (SQLException ex) {
+        System.err.println("Une erreur s'est produite lors de la suppression du bien : " + ex.getMessage());
+    }
+}
+        
+        
+        
+        
+        
+        
+        
+        
+    
      @FXML
     void consultation(ActionEvent event)throws IOException {
         Parent page2 = FXMLLoader.load(getClass().getResource("TestBien.fxml"));

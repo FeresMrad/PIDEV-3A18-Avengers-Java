@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="649.0" prefWidth="1017.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListeParticipantsController">
+<AnchorPane id="AnchorPane" prefHeight="800" prefWidth="1200" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListeParticipantsController">
    <children>
       <TableView fx:id="tableparticipants" layoutX="157.0" layoutY="265.0" prefHeight="271.0" prefWidth="750.0">
         <columns>

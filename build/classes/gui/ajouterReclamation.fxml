@@ -9,20 +9,33 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to right, #14B1A1, #CCF5F1);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.AjouterReclamationController">
    <children>
-      <TextField fx:id="tfnom" layoutX="284.0" layoutY="83.0" promptText="Tapez votre nom" />
-      <TextArea fx:id="tfdesc" layoutX="284.0" layoutY="122.0" prefHeight="89.0" prefWidth="200.0" promptText="Description" />
-      <Label layoutX="118.0" layoutY="79.0" prefHeight="25.0" prefWidth="87.0" text="Nom Client" />
-      <Label layoutX="118.0" layoutY="122.0" prefHeight="25.0" prefWidth="101.0" text="Description" />
-      <Button fx:id="btnadd" layoutX="447.0" layoutY="332.0" mnemonicParsing="false" onAction="#ajouterReclamation" text="ENREGISTRER" />
+      <TextField fx:id="tfnom" layoutX="284.0" layoutY="67.0" promptText="Tapez votre nom" />
+      <TextArea fx:id="tfdesc" layoutX="270.0" layoutY="149.0" prefHeight="89.0" prefWidth="200.0" promptText="Description" />
+      <Label layoutX="118.0" layoutY="70.0" prefHeight="25.0" prefWidth="87.0" text="Nom Client">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label layoutX="106.0" layoutY="149.0" prefHeight="25.0" prefWidth="101.0" text="Description">
+         <font>
+            <Font name="Bookman Old Style" size="14.0" />
+         </font></Label>
+      <Button fx:id="btnadd" layoutX="372.0" layoutY="356.0" mnemonicParsing="false" onAction="#ajouterReclamation" text="ENREGISTRER" />
       <Label layoutX="195.0" layoutY="14.0" prefHeight="39.0" prefWidth="258.0" text="Ajouter Réclamation">
          <font>
-            <Font size="27.0" />
+            <Font name="Book Antiqua" size="27.0" />
          </font>
       </Label>
-      <TextField fx:id="tfstatus" layoutX="284.0" layoutY="233.0" promptText="status" />
-      <TextField fx:id="tfsujet" layoutX="284.0" layoutY="280.0" promptText="sujet" />
-      <Label layoutX="134.0" layoutY="229.0" prefHeight="25.0" prefWidth="101.0" text="Status" />
-      <Label layoutX="134.0" layoutY="276.0" prefHeight="25.0" prefWidth="78.0" text="Subject" />
-      <Button fx:id="btnpdf" layoutX="334.0" layoutY="332.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Générer PDF" />
+      <TextField fx:id="tfstatus" layoutX="270.0" layoutY="260.0" promptText="status" />
+      <TextField fx:id="tfsujet" layoutX="270.0" layoutY="307.0" promptText="sujet" />
+      <Label layoutX="120.0" layoutY="256.0" prefHeight="25.0" prefWidth="101.0" text="Status" />
+      <Label layoutX="120.0" layoutY="303.0" prefHeight="25.0" prefWidth="78.0" text="Subject" />
+      <Button fx:id="btnpdf" layoutX="259.0" layoutY="356.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Générer PDF" />
+      <Button layoutX="14.0" layoutY="357.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Retour" />
+      <TextField fx:id="tfmail" layoutX="284.0" layoutY="108.0" />
+      <Label layoutX="126.0" layoutY="105.0" prefHeight="25.0" prefWidth="87.0" text="Mail client">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
